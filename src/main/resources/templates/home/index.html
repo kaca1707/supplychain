@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply chain</title>
+</head>
+<body>
+<h1>Welcome to supply chain</h1>
+All test actors:
+<table>
+    <thead>
+    <tr>
+        <th> Title</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:if="${actors.empty}">
+        <td colspan="2"> No actors Available</td>
+    </tr>
+    <tr th:each="actor:${actors}">
+        <td><span th:text="${actor.name}"> Name </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<form method="post" action="/actor">
+    <button type="submit">Create random actor</button>
+</form>
+
+</body>
+</html>
