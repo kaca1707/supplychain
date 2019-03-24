@@ -8,14 +8,14 @@ import java.util.UUID;
 public class OrderProxy {
 
     /*
-    @return set of orders that are in a blockchain
+    @return set of orders that are in a BlockChain
      */
     public Set<Order> consultChain(){
         //TODO
         return null;
     }
 
-    /* Saves an order in a blockchain
+    /* Saves an order in the BlockChain
     @param transactionId: id  that links a maximum of 4 orders
     @param order: Request/Delivery that has to be added to a blockchain
      */

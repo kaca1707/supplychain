@@ -1,6 +1,5 @@
 package upm.softwaredesign.finalproject.order;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Product;
 
@@ -10,12 +9,6 @@ import java.util.UUID;
 
 public class Order {
 
-    public Order(){
-
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private Actor sender;
@@ -24,7 +17,9 @@ public class Order {
 
     private Product product;
 
-    @DateTimeFormat
     private Date time;
 
+    public Order(){
+
+    }
 }
