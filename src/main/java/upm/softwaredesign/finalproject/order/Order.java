@@ -1,6 +1,8 @@
-package upm.softwaredesign.finalproject.model;
+package upm.softwaredesign.finalproject.order;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.model.Product;
 
 import javax.persistence.*;
 import java.util.Date;
