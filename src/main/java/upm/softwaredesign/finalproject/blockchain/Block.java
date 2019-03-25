@@ -8,8 +8,6 @@ import upm.softwaredesign.finalproject.order.Order;
 /**
  * TODO make this class serializable (note the properities)
  * 			e.g. fina a way to wrap Order since is not serializable
- * TODO evaluate hash, and block ID. When to initialize them?
- *			How to use them?
  */
 public class Block implements java.io.Serializable {
 
