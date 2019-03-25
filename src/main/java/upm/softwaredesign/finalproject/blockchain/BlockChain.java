@@ -1,20 +1,23 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class BlockChain {
+/**
+ * TODO when to add blocks data? constructor?
+ */
+public class BlockChain implements java.io.Serializable {
 
 	private ArrayList<Block> blocks;
 
-
 	/**
-	 * This method adds a new block to the blockchain and assigns a blockId after it's saved
+	 * This method adds a new block to the blockchain
+	 * and assigns a blockId after it's saved
 	 * @param block
 	 */
 	public Block addBlock(Block block){
 		return null;
 	}
-
 
 	/**
 	 * TODO: not sure about it's function
@@ -26,7 +29,6 @@ public class BlockChain {
 
 	/**
 	 * Retrive all the existing blocks in the blockchain
-	 * @param block
 	 */
 	public ArrayList<Block> getBlocks(){
 		return blocks;
@@ -36,7 +38,8 @@ public class BlockChain {
 	 * Saves the current instance of the blockchain
 	 */
 	public void saveChain(){
-
+		// TODO save this instance in the persistence layer
+		
 	}
 
 }

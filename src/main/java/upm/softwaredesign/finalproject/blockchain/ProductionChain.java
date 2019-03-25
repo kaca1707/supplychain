@@ -8,18 +8,18 @@ public class ProductionChain {
 	 * @return returns a singleton instance of the blockchain
 	 */
 	public BlockChain getInstance(){
-		if(chain == null){
-			retrieveChain();
+		if (this.chain == null) {
+			this.chain = retrieveChain();
 		}
-		return chain;
+		return this.chain;
 	}
 
 	/**
 	 * @return retrives the blockchain from persistence layer
 	 */
 	private BlockChain retrieveChain(){
-
 		//TODO: get chain from persistence layer
+		// BlockChain chain = ...
 		return chain;
 	}
 }

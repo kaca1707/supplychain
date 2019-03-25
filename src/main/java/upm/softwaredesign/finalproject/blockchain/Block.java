@@ -1,13 +1,19 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.UUID;
+import java.io.Serializable;
 
 import upm.softwaredesign.finalproject.order.Order;
 
-public class Block {
+/**
+ * TODO make this class serializable (note the properities)
+ * 			e.g. fina a way to wrap Order since is not serializable
+ * TODO evaluate hash, and block ID. When to initialize them?
+ *			How to use them?
+ */
+public class Block implements java.io.Serializable {
 
-	private UUID  blockId;
-
+	private UUID blockId;
 	private Order order;
 
 	public UUID getBlockId() {
@@ -25,6 +31,5 @@ public class Block {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
 
 }
