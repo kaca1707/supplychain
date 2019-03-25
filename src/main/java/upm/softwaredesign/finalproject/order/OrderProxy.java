@@ -2,7 +2,7 @@ package upm.softwaredesign.finalproject.order;
 
 import upm.softwaredesign.finalproject.blockchain.Block;
 import upm.softwaredesign.finalproject.blockchain.BlockChain;
-import upm.softwaredesign.finalproject.blockchain.FactoryChain;
+import upm.softwaredesign.finalproject.blockchain.ProductionChain;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public class OrderProxy {
 
         ArrayList<Order> orderArrayList = new ArrayList<>();
 
-        for (Block block : FactoryChain.getInstance().getBlocks()) {
+        for (Block block : ProductionChain.getInstance().getBlocks()) {
             orderArrayList.add(block.getOrder());
         }
 
@@ -37,7 +37,7 @@ public class OrderProxy {
         Block block = new Block();
         block.setBlockId(transactionGroupId);
         block.setOrder(order);
-        FactoryChain.getInstance().getBlocks().add(block);
+        ProductionChain.getInstance().getBlocks().add(block);
     }
 
     /* checks the status of a transaction:
@@ -48,6 +48,6 @@ public class OrderProxy {
     @return the status of the transaction
      */
     public TransactionStatus status(UUID transactionGroupId){
-        return FactoryChain.getInstance().getTransactionGroupStatus(transactionGroupId);
+        return ProductionChain.getInstance().getTransactionGroupStatus(transactionGroupId);
     }
 }

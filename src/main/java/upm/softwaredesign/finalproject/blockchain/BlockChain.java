@@ -1,7 +1,9 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.ArrayList;
-import java.io.Serializable;
+import java.util.UUID;
+
+import upm.softwaredesign.finalproject.enums.TransactionStatus;
 
 /**
  * TODO when to add blocks data? constructor?
@@ -42,4 +44,13 @@ public class BlockChain implements java.io.Serializable {
 		
 	}
 
+	/**
+	 * Returns the status of the collection group of orders
+	 * For eg. If order is waiting for delivery from production house
+	 *         after factory requested it in the chain of events then it would be FACTORY_REQUEST
+	 */
+	public TransactionStatus getTransactionGroupStatus(UUID transactionGroupId){
+		
+		return null;
+	}
 }

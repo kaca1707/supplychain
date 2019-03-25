@@ -2,22 +2,22 @@ package upm.softwaredesign.finalproject.blockchain;
 
 public class ProductionChain {
 
-	private BlockChain chain;
+	private static BlockChain chain;
 
 	/**
 	 * @return returns a singleton instance of the blockchain
 	 */
-	public BlockChain getInstance(){
-		if (this.chain == null) {
-			this.chain = retrieveChain();
+	public static BlockChain getInstance(){
+		if (chain == null) {
+			chain = retrieveChain();
 		}
-		return this.chain;
+		return chain;
 	}
 
 	/**
 	 * @return retrives the blockchain from persistence layer
 	 */
-	private BlockChain retrieveChain(){
+	private static BlockChain retrieveChain(){
 		//TODO: get chain from persistence layer
 		// BlockChain chain = ...
 		return chain;
