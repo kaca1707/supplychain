@@ -35,7 +35,7 @@ public class OrderProxy {
      */
     public void saveOrder(Order order, UUID transactionGroupId){
         Block block = new Block();
-        block.setBlockId(transactionGroupId);
+        block.setTransactionGroupId(transactionGroupId);
         block.setOrder(order);
         ProductionChain.getInstance().getBlocks().add(block);
     }

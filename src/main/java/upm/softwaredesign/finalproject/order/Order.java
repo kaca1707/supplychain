@@ -23,8 +23,8 @@ public class Order {
 
     }
 
-    public Order(UUID id, Actor sender, Actor receiver, Product product, Date time) {
-        this.id = id;
+    public Order(Actor sender, Actor receiver, Product product, Date time) {
+        this.id = UUID.randomUUID();
         this.sender = sender;
         this.receiver = receiver;
         this.product = product;

@@ -12,6 +12,7 @@ import upm.softwaredesign.finalproject.order.Order;
 public class Block implements java.io.Serializable {
 
 	private UUID blockId;
+	private UUID transactionGroupId;
 	private Order order;
 
 	public UUID getBlockId() {
@@ -30,4 +31,7 @@ public class Block implements java.io.Serializable {
 		this.order = order;
 	}
 
+	public void setTransactionGroupId(UUID transactionGroupId) {
+		this.transactionGroupId = transactionGroupId;
+	}
 }

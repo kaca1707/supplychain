@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Delivery extends Order {
 
-    public Delivery(UUID id, Actor sender, Actor receiver, Product product, Date time) {
-        super(id, sender, receiver, product, time);
+    public Delivery(Actor sender, Actor receiver, Product product, Date time) {
+        super(sender, receiver, product, time);
     }
 }
