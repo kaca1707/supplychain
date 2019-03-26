@@ -9,7 +9,7 @@ import upm.softwaredesign.finalproject.order.Order;
  * TODO make this class serializable (note the properities)
  * 			e.g. fina a way to wrap Order since is not serializable
  */
-public class Block implements java.io.Serializable {
+public class Block implements Serializable {
 
 	private UUID blockId;
 	private UUID transactionGroupId;

@@ -2,55 +2,83 @@ package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.Serializable;
 
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
+import upm.softwaredesign.finalproject.order.Order;
 
-/**
- * TODO when to add blocks data? constructor?
- */
-public class BlockChain implements java.io.Serializable {
+public class BlockChain implements Serializable {
 
 	private ArrayList<Block> blocks;
 
 	/**
 	 * This method adds a new block to the blockchain
-	 * and assigns a blockId after it's saved
-	 * @param block
+	 * by wrapping an order. Return value used to track
+	 * successful addition of the order
+	 *
+	 * @param Order			order
+	 * @return Boolean
 	 */
-	public Block addBlock(Block block){
-		return null;
+	public Boolean addOrder(Order order){
+		// wrap order in a Block
+		Block block = new Block();
+		// TODO ...
+		// append block to the chain of blocks
+		Boolean appended = appendBlock(block);
+		// store blockchains changes
+		// TODO ...
+		return false;
 	}
 
 	/**
-	 * TODO: not sure about it's function
-	 * @param id
+	 * Retrieve an order from the blockchain,
+	 * given its id
+	 *
+	 * @param String		id
+	 * @return Order
 	 */
-	public void orderInfo(String id){
-
+	public Order orderInfo(String id){
+		// filter blockchain by order id
+		// TODO ...
+		return order;
 	}
 
 	/**
-	 * Retrive all the existing blocks in the blockchain
+	 * Retrive all the existing orders in the blockchain
+	 *
+	 * @return ArrayList<Order>
 	 */
-	public ArrayList<Block> getBlocks(){
-		return blocks;
+	public ArrayList<Order> listOrders(){
+		// make an ArrayList of Orders
+		ArrayList<Order> orders = new ArrayList<Order>();
+		// fill the list with orders extracted from blocks
+		// TODO ...
+		return orders;
 	}
 
 	/**
 	 * Saves the current instance of the blockchain
+	 * in the persistence layer. Returning true once
+	 * has been successfully stored
+	 *
+	 * @return Boolean
 	 */
-	public void saveChain(){
-		// TODO save this instance in the persistence layer
-		
+	private Boolean saveChain(){
+		// send the current instance 'this' to the persistence layer
+		// TODO ...
+		return false;
 	}
 
 	/**
-	 * Returns the status of the collection group of orders
-	 * For eg. If order is waiting for delivery from production house
-	 *         after factory requested it in the chain of events then it would be FACTORY_REQUEST
+	 * Append new block to the chain
+	 *
+	 * @param Block			block
+	 * @return Boolean
 	 */
-	public TransactionStatus getTransactionGroupStatus(UUID transactionGroupId){
-		
-		return null;
+	private Boolean appendBlock(Block block){
+		// append block to the chain
+		// TODO ...
+		return false;
 	}
+
 }
