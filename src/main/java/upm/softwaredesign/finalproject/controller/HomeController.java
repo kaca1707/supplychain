@@ -8,25 +8,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import upm.softwaredesign.finalproject.model.Actor;
+
+import upm.softwaredesign.finalproject.model.ActorEntity;
 import upm.softwaredesign.finalproject.model.Factory;
 import upm.softwaredesign.finalproject.model.Producer;
 import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
+import upm.softwaredesign.finalproject.service.BlockchainService;
 
 @Controller
 public class HomeController {
 
     private ActorRepository actorRepository;
+    private BlockchainService blockchainService;
 
     @Autowired
-    public HomeController(ActorRepository actorRepository) {
+    public HomeController(ActorRepository actorRepository, BlockchainService blockchainService) {
         this.actorRepository = actorRepository;
+        this.blockchainService = blockchainService;
     }
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView mav) {
-        List<Actor> allActors = actorRepository.findAll();
+        List<ActorEntity> allActors = actorRepository.findAll();
         mav.addObject("actors", allActors);
         mav.setViewName("home/index");
 
@@ -35,7 +39,7 @@ public class HomeController {
 
     @PostMapping("/actor")
     public String createNewActor() {
-        Actor a = new Actor();
+        ActorEntity a = new ActorEntity();
         Random r = new Random();
         final String name = "TEST-ACTOR" + r.nextInt();
         a.setName(name);
@@ -46,7 +50,7 @@ public class HomeController {
 
     @PostMapping("/retailer")
     public String createNewRetailer() {
-        Actor a = new Retailer();
+        ActorEntity a = new Retailer();
         Random r = new Random();
         final String name = "TEST-Retailer" + r.nextInt();
         a.setName(name);
@@ -57,7 +61,7 @@ public class HomeController {
 
     @PostMapping("/factory")
     public String createNewFactory() {
-        Actor a = new Factory();
+        ActorEntity a = new Factory();
         Random r = new Random();
         final String name = "TEST-Factory" + r.nextInt();
         a.setName(name);
@@ -68,7 +72,7 @@ public class HomeController {
 
     @PostMapping("/producer")
     public String createNewProducer() {
-        Actor a = new Producer();
+        ActorEntity a = new Producer();
         Random r = new Random();
         final String name = "TEST-Producer" + r.nextInt();
         a.setName(name);

@@ -1,23 +1,21 @@
 package upm.softwaredesign.finalproject.model;
 
-
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Actor {
+public class ActorEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
     private String type; // todo: ActorTypeEnum
 
+    // private Actor nextInChain;
 
-//    private Actor nextInChain;
-
-    private String checkOrderStatus(){
+    private String checkOrderStatus() {
         throw new RuntimeException("todo");
     }
 

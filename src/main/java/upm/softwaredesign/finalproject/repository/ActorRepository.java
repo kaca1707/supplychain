@@ -4,13 +4,14 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import upm.softwaredesign.finalproject.model.Actor;
+
+import upm.softwaredesign.finalproject.model.ActorEntity;
 
 @Repository
-public interface ActorRepository extends JpaRepository<Actor, Integer> {
+public interface ActorRepository extends JpaRepository<ActorEntity, Integer> {
 
-    Optional<Actor> findByName(String name);
+    Optional<ActorEntity> findByName(String name);
 
-    Optional<Actor> findByType(String type);
+    Optional<ActorEntity> findByType(String type);
 
 }
