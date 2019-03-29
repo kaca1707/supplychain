@@ -9,7 +9,7 @@ import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Factory;
 import upm.softwaredesign.finalproject.model.Producer;
 import upm.softwaredesign.finalproject.model.Retailer;
-import upm.softwaredesign.finalproject.repository.ActorRepository;
+import upm.softwaredesign.finalproject.repository.ActorEntity;
 
 import java.util.List;
 import java.util.Random;
@@ -18,16 +18,16 @@ import java.util.Random;
 public class HomeController {
 
 
-    private ActorRepository actorRepository;
+    private ActorEntity actorEntity;
 
     @Autowired
-    public HomeController(ActorRepository actorRepository) {
-        this.actorRepository = actorRepository;
+    public HomeController(ActorEntity actorEntity) {
+        this.actorEntity = actorEntity;
     }
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView mav) {
-        List<Actor> allActors = actorRepository.findAll();
+        List<Actor> allActors = actorEntity.findAll();
         mav.addObject("actors", allActors);
         mav.setViewName("home/index");
 
@@ -40,7 +40,7 @@ public class HomeController {
         Random r = new Random();
         final String name = "TEST-ACTOR" + r.nextInt();
         a.setName(name);
-        actorRepository.save(a);
+        actorEntity.save(a);
 
         return "redirect:/";
     }
@@ -51,7 +51,7 @@ public class HomeController {
         Random r = new Random();
         final String name = "TEST-Retailer" + r.nextInt();
         a.setName(name);
-        actorRepository.save(a);
+        actorEntity.save(a);
 
         return "redirect:/";
     }
@@ -62,7 +62,7 @@ public class HomeController {
         Random r = new Random();
         final String name = "TEST-Factory" + r.nextInt();
         a.setName(name);
-        actorRepository.save(a);
+        actorEntity.save(a);
 
         return "redirect:/";
     }
@@ -73,7 +73,7 @@ public class HomeController {
         Random r = new Random();
         final String name = "TEST-Producer" + r.nextInt();
         a.setName(name);
-        actorRepository.save(a);
+        actorEntity.save(a);
 
         return "redirect:/";
     }

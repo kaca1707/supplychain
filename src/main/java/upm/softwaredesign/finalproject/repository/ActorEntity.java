@@ -8,7 +8,7 @@ import upm.softwaredesign.finalproject.model.Actor;
 import java.util.Optional;
 
 @Repository
-public interface ActorRepository extends JpaRepository<Actor, Integer> {
+public interface ActorEntity extends JpaRepository<Actor, Integer> {
     Optional<Actor> findByName(String name);
 
     Optional<Actor> findByType(String type);

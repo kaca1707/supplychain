@@ -36,5 +36,4 @@ public class Actor {
     public void setType(String type) {
         this.type = type;
     }
-
 }
