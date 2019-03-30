@@ -1,4 +1,4 @@
 package upm.softwaredesign.finalproject.model;
 
-public class Product {
+public class ProductEntity {
 }

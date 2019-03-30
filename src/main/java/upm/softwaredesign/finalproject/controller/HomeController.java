@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import upm.softwaredesign.finalproject.model.ActorEntity;
-import upm.softwaredesign.finalproject.model.Factory;
-import upm.softwaredesign.finalproject.model.Producer;
-import upm.softwaredesign.finalproject.model.Retailer;
+import upm.softwaredesign.finalproject.model.FactoryEntity;
+import upm.softwaredesign.finalproject.model.ProducerEntity;
+import upm.softwaredesign.finalproject.model.RetailerEntity;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
@@ -50,7 +50,7 @@ public class HomeController {
 
     @PostMapping("/retailer")
     public String createNewRetailer() {
-        ActorEntity a = new Retailer();
+        ActorEntity a = new RetailerEntity();
         Random r = new Random();
         final String name = "TEST-Retailer" + r.nextInt();
         a.setName(name);
@@ -61,7 +61,7 @@ public class HomeController {
 
     @PostMapping("/factory")
     public String createNewFactory() {
-        ActorEntity a = new Factory();
+        ActorEntity a = new FactoryEntity();
         Random r = new Random();
         final String name = "TEST-Factory" + r.nextInt();
         a.setName(name);
@@ -72,7 +72,7 @@ public class HomeController {
 
     @PostMapping("/producer")
     public String createNewProducer() {
-        ActorEntity a = new Producer();
+        ActorEntity a = new ProducerEntity();
         Random r = new Random();
         final String name = "TEST-Producer" + r.nextInt();
         a.setName(name);
