@@ -1,13 +1,11 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.ArrayList;
-import java.util.UUID;
-import java.io.Serializable;
 
-import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.order.Order;
+import upm.softwaredesign.finalproject.interfaces.Jsonable;
 
-public class BlockChain implements Serializable {
+public class BlockChain implements Jsonable {
 
 	private ArrayList<Block> blocks;
 
@@ -79,6 +77,22 @@ public class BlockChain implements Serializable {
 		// append block to the chain
 		// TODO ...
 		return false;
+	}
+
+	/**
+   * Covert the blocks into a Json format string
+   */
+  public String toJson(){
+		// TODO ...
+		// return
+	}
+
+  /**
+   * Populate class with data from Json format string
+   * @param String in json format
+   */
+  public void fromJson(String jsonData){
+		// TODO ...
 	}
 
 }

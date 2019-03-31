@@ -1,15 +1,10 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.UUID;
-import java.io.Serializable;
 
 import upm.softwaredesign.finalproject.order.Order;
 
-/**
- * TODO make this class serializable (note the properities)
- * 			e.g. fina a way to wrap Order since is not serializable
- */
-public class Block implements Serializable {
+public class Block {
 
 	private UUID blockId;
 	private UUID transactionGroupId;
@@ -34,4 +29,9 @@ public class Block implements Serializable {
 	public void setTransactionGroupId(UUID transactionGroupId) {
 		this.transactionGroupId = transactionGroupId;
 	}
+
+	public void getTransactionGroupId() {
+		return this.transactionGroupId;
+	}
+
 }
