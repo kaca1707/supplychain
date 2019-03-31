@@ -89,6 +89,7 @@ public class BlockChain implements Jsonable {
 
 	/**
    * Covert the blocks into a Json format string
+	 * NOTE https://www.baeldung.com/jackson-object-mapper-tutorial
 	 *
 	 * @return String
 	 */
@@ -101,6 +102,8 @@ public class BlockChain implements Jsonable {
 
   /**
    * Populate class with data from Json format string
+	 * NOTE https://www.baeldung.com/jackson-object-mapper-tutorial
+	 *
    * @param String in json format
    */
   public void fromJson(String jsonData){
