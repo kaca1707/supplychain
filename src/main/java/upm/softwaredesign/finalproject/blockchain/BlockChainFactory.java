@@ -1,5 +1,7 @@
 package upm.softwaredesign.finalproject.blockchain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
 public class BlockChainFactory {
@@ -8,8 +10,8 @@ public class BlockChainFactory {
 	private static BlockchainService blockchainService;
 
 	@Autowired
-	public BlockChainFactory(BlockchainService blockchainService) {
-			this.blockchainService = blockchainService;
+	public BlockChainFactory(BlockchainService bService) {
+			blockchainService = bService;
 	}
 
 	/**
@@ -18,10 +20,10 @@ public class BlockChainFactory {
 	 * @return BlockChain
 	 */
 	public static BlockChain build(){
-		if (this.chain == null) {
-			this.chain = this.retrieveChain();
+		if (chain == null) {
+			chain = retrieveChain();
 		}
-		return this.chain;
+		return chain;
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class BlockChainFactory {
 	 */
 	private static BlockChain retrieveChain(){
 		// store instance
-		this.chain = this.blockchainService.retrieveBlockchain();
-		return this.chain;
+		chain = blockchainService.retrieveBlockchain();
+		return chain;
 	}
 }
