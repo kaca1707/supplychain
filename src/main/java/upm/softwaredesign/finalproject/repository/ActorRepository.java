@@ -1,5 +1,6 @@
 package upm.softwaredesign.finalproject.repository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,9 +10,6 @@ import upm.softwaredesign.finalproject.model.ActorEntity;
 
 @Repository
 public interface ActorRepository extends JpaRepository<ActorEntity, Integer> {
-
-    Optional<ActorEntity> findByName(String name);
-
-    Optional<ActorEntity> findByType(String type);
+ 
 
 }

@@ -34,4 +34,14 @@ public class ActorEntity {
     public void setType(String type) {
         this.type = type;
     }
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+    
+    
 }
