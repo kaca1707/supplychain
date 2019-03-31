@@ -1,6 +1,7 @@
 package upm.softwaredesign.finalproject.blockchain;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import upm.softwaredesign.finalproject.order.Order;
 import upm.softwaredesign.finalproject.interfaces.Jsonable;
@@ -41,13 +42,17 @@ public class BlockChain implements Jsonable {
 	 * Retrieve an order from the blockchain,
 	 * given its id
 	 *
-	 * @param String		id
-	 * @return Order
+	 * @param UUID		id
+	 * @return Order | null
 	 */
-	public Order orderInfo(String id){
-		// filter blockchain by order id
-		// TODO ...
-		return order;
+	public Order orderInfo(UUID id){
+		// filter blocks by order id
+		for (Block block : this.blocks) {
+      if (block.getOrder().getId() === id) {
+				return block.getOrder();
+			}
+    }
+		return null;
 	}
 
 	/**
@@ -59,7 +64,7 @@ public class BlockChain implements Jsonable {
 		// make an ArrayList of Orders
 		ArrayList<Order> orders = new ArrayList<Order>();
 		// fill the list with orders extracted from blocks
-		for (String Block : block) {
+		for (Block block : this.blocks) {
       orders.add(block.getOrder());
     }
 		return orders;
