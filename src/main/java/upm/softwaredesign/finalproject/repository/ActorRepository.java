@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import upm.softwaredesign.finalproject.model.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorEntity;
 
 @Repository
 public interface ActorRepository extends JpaRepository<ActorEntity, Integer> {

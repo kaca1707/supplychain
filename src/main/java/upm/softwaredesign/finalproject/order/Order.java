@@ -1,7 +1,7 @@
 package upm.softwaredesign.finalproject.order;
 
-import upm.softwaredesign.finalproject.model.ActorEntity;
-import upm.softwaredesign.finalproject.model.ProductEntity;
+import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.model.Product;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,19 +11,19 @@ public class Order {
 
     private UUID id;
 
-    private ActorEntity sender;
+    private Actor sender;
 
-    private ActorEntity receiver;
+    private Actor receiver;
 
-    private ProductEntity product;
+    private Product product;
 
     private Date time;
 
-    public Order() {
+    public Order(){
 
     }
 
-    public Order(ActorEntity sender, ActorEntity receiver, ProductEntity product, Date time) {
+    public Order(Actor sender, Actor receiver, Product product, Date time) {
         this.id = UUID.randomUUID();
         this.sender = sender;
         this.receiver = receiver;
@@ -35,15 +35,15 @@ public class Order {
         return id;
     }
 
-    public ActorEntity getSender() {
+    public Actor getSender() {
         return sender;
     }
 
-    public ActorEntity getReceiver() {
+    public Actor getReceiver() {
         return receiver;
     }
 
-    public ProductEntity getProduct() {
+    public Product getProduct() {
         return product;
     }
 
@@ -55,15 +55,15 @@ public class Order {
         this.id = id;
     }
 
-    public void setSender(ActorEntity sender) {
+    public void setSender(Actor sender) {
         this.sender = sender;
     }
 
-    public void setReceiver(ActorEntity receiver) {
+    public void setReceiver(Actor receiver) {
         this.receiver = receiver;
     }
 
-    public void setProduct(ProductEntity product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

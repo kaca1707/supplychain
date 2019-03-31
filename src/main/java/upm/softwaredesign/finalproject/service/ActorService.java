@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import upm.softwaredesign.finalproject.model.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorEntity;
+import upm.softwaredesign.finalproject.entity.BlockchainEntity;
+import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
 
 @Service
@@ -19,20 +21,45 @@ public class ActorService{
 		this.repository = repository;
 	}
 
-
-	public Optional<ActorEntity> findById(Integer id ) {
-		return this.repository.findById(id);
+	public Actor cast(ActorEntity actorEntity)
+	{
+		Actor actor = new Actor();
+		actor.setName(actorEntity.getName());
+		actor.setType(actorEntity.getType());
+		return actor;
+	}
+	public Actor findByType(String type ) {
+		List<ActorEntity> actors = this.repository.findAll();
+		for (int i = 0; i < actors.size(); i++) {
+			if(actors.get(i).getType().equals(type))
+			{
+				return this.cast(actors.get(i));
+				
+			}
+		}
+		return null;
 	}
 
-    public void save(ActorEntity actor) {
-    		this.repository.save(actor);
+    public void save(Actor actor) {
+    	ActorEntity actorEntity = new ActorEntity();
+    	actorEntity.setName(actor.getName());
+    	actorEntity.setType(actor.getType());
+    	this.repository.save(actorEntity);
+    }
+    /*
+    public void delete(Actor actor) {
+    	
+    	List<ActorEntity> actors = this.repository.findAll();
+		for (int i = 0; i < actors.size(); i++) {
+			if(actors.get(i).getType().equals(actor.getType()))
+			{
+				this.repository.deleteById(actors.get(i).getId());				
+				
+			}
+		}
     }
     
-    public void delete(Integer id) {
-    		this.repository.deleteById(id);
-    }
-    
-    public void update(ActorEntity ac) {
+    public void update(Actor ac) {
     		Optional<ActorEntity> acOpt = this.repository.findById(ac.getId());
     		if(acOpt.isPresent())
     		{
@@ -43,10 +70,15 @@ public class ActorService{
     		}    		
     }
     
-    public List<ActorEntity> getAll(){
-    		return this.repository.findAll();
+    
+    public List<Actor> getAll(){
+    	//List<ActorEntity> actorsEntity = new List<ActorEntity>();
+    	//List<Actor> actors = new List<ActorEntity>();
+    	this.repository.findAll();
+    	for (int i = 0; i < array.length; i++) {
+			
+		}
+    	return ;
     }
-	
-	
-
+	*/
 }

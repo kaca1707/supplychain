@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import upm.softwaredesign.finalproject.model.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorEntity;
 import upm.softwaredesign.finalproject.model.FactoryEntity;
 import upm.softwaredesign.finalproject.model.ProducerEntity;
 import upm.softwaredesign.finalproject.model.RetailerEntity;

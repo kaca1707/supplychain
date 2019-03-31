@@ -3,5 +3,5 @@ package upm.softwaredesign.finalproject.model;
 import javax.persistence.Entity;
 
 @Entity
-public class RetailerEntity extends ActorEntity {
+public class Retailer extends Actor {
 }

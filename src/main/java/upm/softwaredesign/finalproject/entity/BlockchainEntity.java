@@ -1,4 +1,4 @@
-package upm.softwaredesign.finalproject.model;
+package upm.softwaredesign.finalproject.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
