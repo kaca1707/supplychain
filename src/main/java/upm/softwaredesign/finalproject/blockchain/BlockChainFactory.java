@@ -5,25 +5,33 @@ import upm.softwaredesign.finalproject.service.BlockchainService;
 public class BlockChainFactory {
 
 	private static BlockChain chain;
+	private static BlockchainService blockchainService;
+
+	@Autowired
+	public BlockChainFactory(BlockchainService blockchainService) {
+			this.blockchainService = blockchainService;
+	}
 
 	/**
-	 * @return returns a singleton instance of the blockchain
+	 * Singleton instance of the blockchain
+	 *
+	 * @return BlockChain
 	 */
 	public static BlockChain build(){
 		if (this.chain == null) {
-			this.chain = retrieveChain();
+			this.chain = this.retrieveChain();
 		}
 		return this.chain;
 	}
 
 	/**
-	 * @return retrives the blockchain from persistence layer
+	 * Retrives the blockchain from persistence layer
+	 *
+	 * @return BlockChain
 	 */
 	private static BlockChain retrieveChain(){
-		// TODO double check instanciation
-		BlockchainService service = new BlockchainService();
 		// store instance
-		this.chain = service.retrieveBlockchain();
+		this.chain = this.blockchainService.retrieveBlockchain();
 		return this.chain;
 	}
 }

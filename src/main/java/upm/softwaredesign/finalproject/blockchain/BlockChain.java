@@ -9,6 +9,12 @@ import upm.softwaredesign.finalproject.service.BlockchainService;
 public class BlockChain implements Jsonable {
 
 	private ArrayList<Block> blocks;
+	private BlockchainService blockchainService;
+
+	@Autowired
+	public BlockChain(BlockchainService blockchainService) {
+			this.blockchainService = blockchainService;
+	}
 
 	/**
 	 * This method adds a new block to the blockchain
@@ -67,9 +73,7 @@ public class BlockChain implements Jsonable {
 	 * @return Boolean
 	 */
 	private Boolean saveChain(){
-		// TODO double check instanciation
-		BlockchainService service = new BlockchainService();
-		service.saveBlockchain(this);
+		this.blockchainService.saveBlockchain(this);
 		// TODO return value not implemented by BlockchainService
 		return true;
 	}
