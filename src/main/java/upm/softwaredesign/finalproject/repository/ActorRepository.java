@@ -1,16 +1,15 @@
 package upm.softwaredesign.finalproject.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
-import upm.softwaredesign.finalproject.model.Actor;
-
+import java.util.ArrayList;
 import java.util.Optional;
 
-@Repository
-public interface ActorRepository extends JpaRepository<Actor, Integer> {
-    Optional<Actor> findByName(String name);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    Optional<Actor> findByType(String type);
+import upm.softwaredesign.finalproject.entity.ActorEntity;
+
+@Repository
+public interface ActorRepository extends JpaRepository<ActorEntity, Integer> {
+ 
 
 }
