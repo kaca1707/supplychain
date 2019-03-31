@@ -89,10 +89,14 @@ public class BlockChain implements Jsonable {
 
 	/**
    * Covert the blocks into a Json format string
-   */
+	 *
+	 * @return String
+	 */
   public String toJson(){
-		// TODO ...
-		// return
+		ObjectMapper objectMapper = new ObjectMapper();
+		// TODO test ...
+		String jsonString = objectMapper.writeValueAsString(this.blocks);
+		return jsonString;
 	}
 
   /**
@@ -100,7 +104,12 @@ public class BlockChain implements Jsonable {
    * @param String in json format
    */
   public void fromJson(String jsonData){
-		// TODO ...
+		ObjectMapper objectMapper = new ObjectMapper();
+		// TODO test ...
+		this.blocks = objectMapper.readValue(
+			jsonData,
+			new TypeReference<ArrayList<Order>>(){}
+		);
 	}
 
 }
