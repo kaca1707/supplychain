@@ -1,5 +1,7 @@
 package upm.softwaredesign.finalproject.blockchain;
 
+import upm.softwaredesign.finalproject.service.BlockchainService;
+
 public class BlockChainFactory {
 
 	private static BlockChain chain;
@@ -18,8 +20,10 @@ public class BlockChainFactory {
 	 * @return retrives the blockchain from persistence layer
 	 */
 	private static BlockChain retrieveChain(){
-		// TODO get chain from persistence layer
-		// this.chain = ...
+		// TODO double check instanciation
+		BlockchainService service = new BlockchainService();
+		// store instance
+		this.chain = service.retrieveBlockchain();
 		return this.chain;
 	}
 }

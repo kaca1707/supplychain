@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import upm.softwaredesign.finalproject.order.Order;
 import upm.softwaredesign.finalproject.interfaces.Jsonable;
+import upm.softwaredesign.finalproject.service.BlockchainService;
 
 public class BlockChain implements Jsonable {
 
@@ -20,12 +21,14 @@ public class BlockChain implements Jsonable {
 	public Boolean addOrder(Order order){
 		// wrap order in a Block
 		Block block = new Block();
-		// TODO ...
+		block.setOrder(order);
 		// append block to the chain of blocks
-		Boolean appended = appendBlock(block);
+		this.appendBlock(block);
 		// store blockchains changes
-		// TODO ...
-		return false;
+		this.saveChain();
+		// TODO implement real Boolean response once
+		// 			it will implmented in saveChain too.
+		return true;
 	}
 
 	/**
@@ -50,7 +53,9 @@ public class BlockChain implements Jsonable {
 		// make an ArrayList of Orders
 		ArrayList<Order> orders = new ArrayList<Order>();
 		// fill the list with orders extracted from blocks
-		// TODO ...
+		for (String Block : block) {
+      orders.add(block.getOrder());
+    }
 		return orders;
 	}
 
@@ -62,21 +67,20 @@ public class BlockChain implements Jsonable {
 	 * @return Boolean
 	 */
 	private Boolean saveChain(){
-		// send the current instance 'this' to the persistence layer
-		// TODO ...
-		return false;
+		// TODO double check instanciation
+		BlockchainService service = new BlockchainService();
+		service.saveBlockchain(this);
+		// TODO return value not implemented by BlockchainService
+		return true;
 	}
 
 	/**
 	 * Append new block to the chain
 	 *
 	 * @param Block			block
-	 * @return Boolean
 	 */
-	private Boolean appendBlock(Block block){
-		// append block to the chain
-		// TODO ...
-		return false;
+	private void appendBlock(Block block){
+		this.blocks.add(block)
 	}
 
 	/**
