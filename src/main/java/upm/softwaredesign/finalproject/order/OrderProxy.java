@@ -1,11 +1,12 @@
 package upm.softwaredesign.finalproject.order;
 
-import upm.softwaredesign.finalproject.blockchain.Block;
-import upm.softwaredesign.finalproject.blockchain.BlockChain;
-import upm.softwaredesign.finalproject.blockchain.ProductionChain;
+
+import upm.softwaredesign.finalproject.blockchain.BlockChainFactory;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 
 import java.util.*;
+import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.model.Product;
 
 public class OrderProxy {
 
@@ -19,25 +20,16 @@ public class OrderProxy {
     @return arraylist of orders that are in the BlockChain
      */
     public ArrayList<Order> consultChain(){
-
-        ArrayList<Order> orderArrayList = new ArrayList<>();
-
-        for (Block block : ProductionChain.getInstance().getBlocks()) {
-            orderArrayList.add(block.getOrder());
-        }
-
-        return orderArrayList;
+        return BlockChainFactory.build().listOrders();
     }
 
     /* Saves an order in the BlockChain
-    @param transactionGroupId: id  that links a maximum of 4 orders
-    @param order: Request/Delivery that has to be added to a BlockChain
      */
-    public void saveOrder(Order order, UUID transactionGroupId){
-        Block block = new Block();
-        block.setTransactionGroupId(transactionGroupId);
-        block.setOrder(order);
-        ProductionChain.getInstance().getBlocks().add(block);
+
+
+    public void saveOrder(Actor sender, Actor receiver, Product product, Date time){
+        Order order = new Order(sender, receiver, product, time);
+        BlockChainFactory.build().addOrder(order);
     }
 
     /* checks the status of a transaction:
@@ -48,6 +40,6 @@ public class OrderProxy {
     @return the status of the transaction
      */
     public TransactionStatus status(UUID transactionGroupId){
-        return ProductionChain.getInstance().getTransactionGroupStatus(transactionGroupId);
+        return null;//BlockChainFactory.build().getTransactionGroupStatus(transactionGroupId);
     }
 }

@@ -1,56 +1,142 @@
 package upm.softwaredesign.finalproject.blockchain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import upm.softwaredesign.finalproject.enums.TransactionStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * TODO when to add blocks data? constructor?
- */
-public class BlockChain implements java.io.Serializable {
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import upm.softwaredesign.finalproject.order.Order;
+import upm.softwaredesign.finalproject.service.BlockchainService;
+
+public class BlockChain implements Jsonable {
 
 	private ArrayList<Block> blocks;
+	private BlockchainService blockchainService;
+
+	@Autowired
+	public BlockChain(BlockchainService blockchainService) {
+			this.blockchainService = blockchainService;
+	}
 
 	/**
 	 * This method adds a new block to the blockchain
-	 * and assigns a blockId after it's saved
-	 * @param block
+	 * by wrapping an order. Return value used to track
+	 * successful addition of the order
+	 *
+	 * @param Order			order
+	 * @return Boolean
 	 */
-	public Block addBlock(Block block){
+	public Boolean addOrder(Order order){
+		// wrap order in a Block
+		Block block = new Block();
+		block.setOrder(order);
+		// append block to the chain of blocks
+		this.appendBlock(block);
+		// store blockchains changes
+		return this.saveChain();
+	}
+
+	/**
+	 * Retrieve an order from the blockchain,
+	 * given its id
+	 *
+	 * @param UUID		id
+	 * @return Order | null
+	 */
+	public Order orderInfo(UUID id){
+		// filter blocks by order id
+		for (Block block : this.blocks) {
+      if (block.getOrder().getId() == id) {
+				return block.getOrder();
+			}
+    }
 		return null;
 	}
 
 	/**
-	 * TODO: not sure about it's function
-	 * @param id
+	 * Retrive all the existing orders in the blockchain
+	 *
+	 * @return ArrayList<Order>
 	 */
-	public void orderInfo(String id){
-
-	}
-
-	/**
-	 * Retrive all the existing blocks in the blockchain
-	 */
-	public ArrayList<Block> getBlocks(){
-		return blocks;
+	public ArrayList<Order> listOrders(){
+		// make an ArrayList of Orders
+		ArrayList<Order> orders = new ArrayList<Order>();
+		// fill the list with orders extracted from blocks
+		for (Block block : this.blocks) {
+	      orders.add(block.getOrder());
+	    }
+		return orders;
 	}
 
 	/**
 	 * Saves the current instance of the blockchain
+	 * in the persistence layer. Returning true once
+	 * has been successfully stored
+	 *
+	 * @return Boolean
 	 */
-	public void saveChain(){
-		// TODO save this instance in the persistence layer
-		
+	private Boolean saveChain(){
+		try {
+			this.blockchainService.saveBlockchain(this);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// TODO return value not implemented by BlockchainService
+		return false;
 	}
 
 	/**
-	 * Returns the status of the collection group of orders
-	 * For eg. If order is waiting for delivery from production house
-	 *         after factory requested it in the chain of events then it would be FACTORY_REQUEST
+	 * Append new block to the chain
+	 *
+	 * @param Block			block
 	 */
-	public TransactionStatus getTransactionGroupStatus(UUID transactionGroupId){
-		
-		return null;
+	private void appendBlock(Block block){
+		this.blocks.add(block);
 	}
+
+	/**
+   * Covert the blocks into a Json format string
+	 * NOTE https://www.baeldung.com/jackson-object-mapper-tutorial
+	 *
+	 * @return String
+	 */
+  public String toJSON(){
+		ObjectMapper objectMapper = new ObjectMapper();
+		// TODO test ...
+		String jsonString = null;
+		try {
+			jsonString = objectMapper.writeValueAsString(this.blocks);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+
+  /**
+   * Populate class with data from Json format string
+	 * NOTE https://www.baeldung.com/jackson-object-mapper-tutorial
+	 *
+   * @param String in json format
+   */
+  public void fromJSON(String jsonData){
+		ObjectMapper objectMapper = new ObjectMapper();
+		// TODO test ...
+		try {
+			this.blocks = objectMapper.readValue(
+				jsonData,
+				new TypeReference<ArrayList<Order>>(){}
+			);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
