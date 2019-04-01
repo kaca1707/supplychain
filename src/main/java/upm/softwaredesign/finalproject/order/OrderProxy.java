@@ -1,5 +1,6 @@
 package upm.softwaredesign.finalproject.order;
 
+
 import upm.softwaredesign.finalproject.blockchain.BlockChainFactory;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 
@@ -24,6 +25,8 @@ public class OrderProxy {
 
     /* Saves an order in the BlockChain
      */
+
+
     public void saveOrder(Actor sender, Actor receiver, Product product, Date time){
         Order order = new Order(sender, receiver, product, time);
         BlockChainFactory.build().addOrder(order);

@@ -11,6 +11,8 @@ public class Order {
 
     private UUID id;
 
+    private UUID transactionGroupId;
+    
     private Actor sender;
 
     private Actor receiver;
@@ -50,4 +52,5 @@ public class Order {
     public Date getTime() {
         return time;
     }
+  
 }
