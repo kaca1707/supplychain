@@ -28,7 +28,7 @@ public class BlockChain implements Jsonable {
 	 * by wrapping an order. Return value used to track
 	 * successful addition of the order
 	 *
-	 * @param Order			order
+	 * @param order
 	 * @return Boolean
 	 */
 	public Boolean addOrder(Order order){
@@ -45,7 +45,7 @@ public class BlockChain implements Jsonable {
 	 * Retrieve an order from the blockchain,
 	 * given its id
 	 *
-	 * @param UUID		id
+	 * @param id
 	 * @return Order | null
 	 */
 	public Order orderInfo(UUID id){
@@ -94,7 +94,7 @@ public class BlockChain implements Jsonable {
 	/**
 	 * Append new block to the chain
 	 *
-	 * @param Block			block
+	 * @param block
 	 */
 	private void appendBlock(Block block){
 		this.blocks.add(block);
@@ -123,7 +123,7 @@ public class BlockChain implements Jsonable {
    * Populate class with data from Json format string
 	 * NOTE https://www.baeldung.com/jackson-object-mapper-tutorial
 	 *
-   * @param String in json format
+   * @param jsonData in json format
    */
   public void fromJSON(String jsonData){
 		ObjectMapper objectMapper = new ObjectMapper();

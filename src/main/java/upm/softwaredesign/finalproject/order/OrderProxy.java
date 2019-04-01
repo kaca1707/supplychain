@@ -35,8 +35,8 @@ public class OrderProxy {
     @param time
     @param transactionGroupId: id  that links a maximum of 4 orders
      */
-    public void saveOrder(Actor sender, Actor receiver, Product product, Date time, UUID transactionGroupId){
-    	Order order = new Order(sender, receiver, product, time);
+    public void saveOrder(Actor sender, Product product, Date time, UUID transactionGroupId){
+    	Order order = new Order(sender, product, time);
 			order.setTransactionGroupId(transactionGroupId);
 			BlockChainFactory.build().addOrder(order);
     }
