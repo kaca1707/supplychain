@@ -40,11 +40,11 @@ public class ActorService{
 		return null;
 	}
 
-    public void save(Actor actor) {
+    public ActorEntity save(Actor actor) {
     	ActorEntity actorEntity = new ActorEntity();
     	actorEntity.setName(actor.getName());
     	actorEntity.setType(actor.getType());
-    	this.repository.save(actorEntity);
+    	return this.repository.save(actorEntity);
     }
     /*
     public void delete(Actor actor) {
