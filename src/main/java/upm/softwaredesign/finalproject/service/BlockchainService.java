@@ -25,13 +25,15 @@ public class BlockchainService {
         this.repository = repository;
     }
 
-    public void saveBlockchain(BlockChain blockchain) throws IOException {
+
+    public BlockchainEntity saveBlockhain(BlockChain blockchain) throws IOException {
+
     	//TODO: return toJSON method
         //List<BlockchainEntity> blockchains = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        if (!blockchain.toJSON().isEmpty()) {
+        if (!blockchain.toJson().isEmpty()) {
         	BlockchainEntity blockChainEntity = new BlockchainEntity();
-        	blockChainEntity.setContent(blockchain.toJSON());
+        	blockChainEntity.setContent(blockchain.toJson());
             //TypeFactory typeFactory = objectMapper.getTypeFactory();
             //CollectionType valueType = typeFactory.constructCollectionType(List.class, BlockchainEntity.class);
             //blockchains = objectMapper.readValue(blockchain.toJSON(), valueType);
@@ -39,7 +41,7 @@ public class BlockchainService {
             //blockchains.add(blockChainEntity);
             //String blockchainContent = objectMapper.writeValueAsString(blockchains);
             //blockchain.setContent(blockchainContent);
-            this.repository.save(blockChainEntity);
+            return this.repository.save(blockChainEntity);
         }
         
     }
@@ -51,8 +53,10 @@ public class BlockchainService {
         }
         BlockchainEntity blockchainEntity = blockchains.get(0);
         
-        BlockChain blockChain = new BlockChain(this);
-        blockChain.fromJSON(blockchainEntity.getContent());
+
+        BlockChain blockChain = new BlockChain();
+        blockChain.fromJson(blockchainEntity.getContent());
+
         return blockChain;
     }
 
