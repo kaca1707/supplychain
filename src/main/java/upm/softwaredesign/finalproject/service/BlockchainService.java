@@ -25,7 +25,7 @@ public class BlockchainService {
         this.repository = repository;
     }
 
-    public void saveBlockhain(BlockChain blockchain) throws IOException {
+    public void saveBlockchain(BlockChain blockchain) throws IOException {
     	//TODO: return toJSON method
         //List<BlockchainEntity> blockchains = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -47,11 +47,11 @@ public class BlockchainService {
     public BlockChain retrieveBlockchain() {
         List<BlockchainEntity> blockchains = this.repository.findAll();
         if (blockchains.isEmpty()) {
-            return new BlockChain();
+            return new BlockChain(this);
         }
         BlockchainEntity blockchainEntity = blockchains.get(0);
         
-        BlockChain blockChain = new BlockChain();
+        BlockChain blockChain = new BlockChain(this);
         blockChain.fromJSON(blockchainEntity.getContent());
         return blockChain;
     }

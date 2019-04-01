@@ -1,10 +1,16 @@
 package upm.softwaredesign.finalproject.blockchain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import upm.softwaredesign.finalproject.order.Order;
-import upm.softwaredesign.finalproject.interfaces.Jsonable;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
 public class BlockChain implements Jsonable {
@@ -32,10 +38,7 @@ public class BlockChain implements Jsonable {
 		// append block to the chain of blocks
 		this.appendBlock(block);
 		// store blockchains changes
-		this.saveChain();
-		// TODO implement real Boolean response once
-		// 			it will implmented in saveChain too.
-		return true;
+		return this.saveChain();
 	}
 
 	/**
@@ -48,7 +51,7 @@ public class BlockChain implements Jsonable {
 	public Order orderInfo(UUID id){
 		// filter blocks by order id
 		for (Block block : this.blocks) {
-      if (block.getOrder().getId() === id) {
+      if (block.getOrder().getId() == id) {
 				return block.getOrder();
 			}
     }
@@ -65,8 +68,8 @@ public class BlockChain implements Jsonable {
 		ArrayList<Order> orders = new ArrayList<Order>();
 		// fill the list with orders extracted from blocks
 		for (Block block : this.blocks) {
-      orders.add(block.getOrder());
-    }
+	      orders.add(block.getOrder());
+	    }
 		return orders;
 	}
 
@@ -78,9 +81,14 @@ public class BlockChain implements Jsonable {
 	 * @return Boolean
 	 */
 	private Boolean saveChain(){
-		this.blockchainService.saveBlockchain(this);
+		try {
+			this.blockchainService.saveBlockchain(this);
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// TODO return value not implemented by BlockchainService
-		return true;
+		return false;
 	}
 
 	/**
@@ -89,7 +97,7 @@ public class BlockChain implements Jsonable {
 	 * @param Block			block
 	 */
 	private void appendBlock(Block block){
-		this.blocks.add(block)
+		this.blocks.add(block);
 	}
 
 	/**
@@ -98,10 +106,16 @@ public class BlockChain implements Jsonable {
 	 *
 	 * @return String
 	 */
-  public String toJson(){
+  public String toJSON(){
 		ObjectMapper objectMapper = new ObjectMapper();
 		// TODO test ...
-		String jsonString = objectMapper.writeValueAsString(this.blocks);
+		String jsonString = null;
+		try {
+			jsonString = objectMapper.writeValueAsString(this.blocks);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return jsonString;
 	}
 
@@ -111,13 +125,18 @@ public class BlockChain implements Jsonable {
 	 *
    * @param String in json format
    */
-  public void fromJson(String jsonData){
+  public void fromJSON(String jsonData){
 		ObjectMapper objectMapper = new ObjectMapper();
 		// TODO test ...
-		this.blocks = objectMapper.readValue(
-			jsonData,
-			new TypeReference<ArrayList<Order>>(){}
-		);
+		try {
+			this.blocks = objectMapper.readValue(
+				jsonData,
+				new TypeReference<ArrayList<Order>>(){}
+			);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

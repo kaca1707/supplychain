@@ -11,6 +11,8 @@ public class Order {
 
     private UUID id;
 
+    private UUID transactionGroupId;
+    
     private Actor sender;
 
     private Actor receiver;
@@ -70,4 +72,13 @@ public class Order {
     public void setTime(Date time) {
         this.time = time;
     }
+
+	public UUID getTransactionGroupId() {
+		return transactionGroupId;
+	}
+
+	public void setTransactionGroupId(UUID transactionGroupId) {
+		this.transactionGroupId = transactionGroupId;
+	}
+    
 }
