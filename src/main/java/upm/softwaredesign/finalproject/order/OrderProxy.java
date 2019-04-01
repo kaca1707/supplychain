@@ -1,12 +1,15 @@
 package upm.softwaredesign.finalproject.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import upm.softwaredesign.finalproject.blockchain.BlockChainFactory;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
+import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Factory;
 import upm.softwaredesign.finalproject.model.Producer;
+import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.model.Retailer;
 
 public class OrderProxy {
@@ -25,12 +28,16 @@ public class OrderProxy {
     }
 
     /* Saves an order in the BlockChain
+    @param sender
+    @param receiver
+    @param product
+    @param time
     @param transactionGroupId: id  that links a maximum of 4 orders
-    @param order: Request/Delivery that has to be added to a BlockChain
      */
-    public void saveOrder(Order order, UUID transactionGroupId){
-        order.setTransactionGroupId(transactionGroupId);
-        BlockChainFactory.build().addOrder(order);
+    public void saveOrder(Actor sender, Actor receiver, Product product, Date time, UUID transactionGroupId){
+    	Order order = new Order(sender, receiver, product, time);
+			order.setTransactionGroupId(transactionGroupId);
+			BlockChainFactory.build().addOrder(order);
     }
 
     /* checks the status of a transaction:
