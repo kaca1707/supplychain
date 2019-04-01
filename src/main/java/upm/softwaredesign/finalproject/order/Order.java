@@ -12,7 +12,7 @@ public class Order {
     private UUID id;
 
     private UUID transactionGroupId;
-    
+
     private Actor sender;
 
     private Actor receiver;
@@ -25,10 +25,9 @@ public class Order {
 
     }
 
-    public Order(Actor sender, Actor receiver, Product product, Date time) {
+    public Order(Actor sender, Product product, Date time) {
         this.id = UUID.randomUUID();
         this.sender = sender;
-        this.receiver = receiver;
         this.product = product;
         this.time = time;
     }
@@ -52,5 +51,14 @@ public class Order {
     public Date getTime() {
         return time;
     }
-  
+
+
+    public UUID getTransactionGroupId() {
+    return transactionGroupId;
+  }
+
+    public void setTransactionGroupId(UUID transactionGroupId) {
+    this.transactionGroupId = transactionGroupId;
+    }
+
 }

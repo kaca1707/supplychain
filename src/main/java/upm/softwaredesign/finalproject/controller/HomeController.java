@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import upm.softwaredesign.finalproject.entity.ActorEntity;
-import upm.softwaredesign.finalproject.model.FactoryEntity;
-import upm.softwaredesign.finalproject.model.ProducerEntity;
-import upm.softwaredesign.finalproject.model.RetailerEntity;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
@@ -36,7 +33,7 @@ public class HomeController {
 
         return mav;
     }
-
+    /*
     @PostMapping("/actor")
     public String createNewActor() {
         ActorEntity a = new ActorEntity();
@@ -80,5 +77,5 @@ public class HomeController {
 
         return "redirect:/";
     }
-
+*/
 }
