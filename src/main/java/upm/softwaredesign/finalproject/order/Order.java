@@ -50,24 +50,4 @@ public class Order {
     public Date getTime() {
         return time;
     }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setSender(Actor sender) {
-        this.sender = sender;
-    }
-
-    public void setReceiver(Actor receiver) {
-        this.receiver = receiver;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
 }
