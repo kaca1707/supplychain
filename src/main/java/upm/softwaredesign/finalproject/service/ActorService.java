@@ -1,15 +1,13 @@
 package upm.softwaredesign.finalproject.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import upm.softwaredesign.finalproject.entity.ActorEntity;
-import upm.softwaredesign.finalproject.entity.BlockchainEntity;
 import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
+
+import java.util.List;
 
 @Service
 public class ActorService{
@@ -23,7 +21,9 @@ public class ActorService{
 
 	public Actor cast(ActorEntity actorEntity)
 	{
-		Actor actor = new Actor();
+		// TODO: We are loosing information about actor type here; Actor should be abstract.
+		//  TODO: We need to have a logic to distinguish type of actor and create aprioprate type
+		Actor actor = new Retailer();
 		actor.setName(actorEntity.getName());
 		actor.setType(actorEntity.getType());
 		return actor;
