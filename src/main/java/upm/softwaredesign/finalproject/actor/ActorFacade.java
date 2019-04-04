@@ -2,7 +2,7 @@ package upm.softwaredesign.finalproject.actor;
 
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.model.*;
-import upm.softwaredesign.finalproject.order.OrderProxy;
+import upm.softwaredesign.finalproject.order.OrderManager;
 
 import java.util.UUID;
 
@@ -15,10 +15,10 @@ public class ActorFacade {
     private Actor producer = new Producer();
     private Actor retailer = new Retailer();
 
-    private OrderProxy orderProxy;
+    private OrderManager orderManager;
 
-    public ActorFacade(OrderProxy orderProxy) {
-        this.orderProxy = requireNonNull(orderProxy);
+    public ActorFacade(OrderManager orderManager) {
+        this.orderManager = requireNonNull(orderManager);
         retailer.setNextInChain(factory);
         factory.setPreviousInChain(retailer);
         factory.setNextInChain(producer);
