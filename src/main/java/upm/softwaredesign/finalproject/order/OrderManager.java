@@ -13,11 +13,11 @@ import upm.softwaredesign.finalproject.model.Producer;
 import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.model.Retailer;
 
-public class OrderProxy {
+public class OrderManager {
 
-    private final static OrderProxy instance = new OrderProxy();
+    private final static OrderManager instance = new OrderManager();
 
-    public static OrderProxy getInstance(){
+    public static OrderManager getInstance(){
         return instance;
     }
 
@@ -28,18 +28,29 @@ public class OrderProxy {
         return BlockChainFactory.build().listOrders();
     }
 
-    /* Saves an order in the BlockChain
+    /* Saves a request order in the BlockChain
     @param sender
-    @param receiver
     @param product
     @param time
     @param transactionGroupId: id  that links a maximum of 4 orders
      */
-    public void saveOrder(Actor sender, Product product, Date time, UUID transactionGroupId){
-    	Order order = new Order(sender, product, time);
-			order.setTransactionGroupId(transactionGroupId);
-			BlockChainFactory.build().addOrder(order);
+    public void saveRequest(Actor sender, Product product, Date time, UUID transactionGroupId){
+    	Request request = new Request(sender, product, time);
+		request.setTransactionGroupId(transactionGroupId);
+		BlockChainFactory.build().addOrder(request);
     }
+
+	/* Saves a delivery order in the BlockChain
+   @param sender
+   @param product
+   @param time
+   @param transactionGroupId: id  that links a maximum of 4 orders
+    */
+	public void saveDelivery(Actor sender, Product product, Date time, UUID transactionGroupId){
+		Delivery delivery = new Delivery(sender, product, time);
+		delivery.setTransactionGroupId(transactionGroupId);
+		BlockChainFactory.build().addOrder(delivery);
+	}
 
     /* checks the status of a transaction:
         - Retailer Request
