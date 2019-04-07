@@ -1,18 +1,15 @@
 package upm.softwaredesign.finalproject.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import upm.softwaredesign.finalproject.blockchain.BlockChain;
 import upm.softwaredesign.finalproject.entity.ActorEntity;
-import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.model.Actor;
-import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ActorService {
@@ -24,60 +21,62 @@ public class ActorService {
 		this.repository = repository;
 	}
 
-	public Actor cast(ActorEntity actorEntity) {
+	public Actor cast(ActorEntity entity) {
 		// TODO: We are loosing information about actor type here; Actor should be
 		// abstract.
 		// TODO: We need to have a logic to distinguish type of actor and create
 		// Appropriate type
 		Actor actor = new Retailer();
-		actor.setName(actorEntity.getName());
-		actor.setType(actorEntity.getType());
+		actor.setId(entity.getId());
+		actor.setName(entity.getName());
+		actor.setType(entity.getType());
 		return actor;
 	}
 
 	public ActorEntity save(Actor actor) {
-		ActorEntity actorEntity = new ActorEntity();
-		actorEntity.setName(actor.getName());
-		actorEntity.setType(actor.getType());
-		return this.repository.save(actorEntity);
+		ActorEntity entity = new ActorEntity();
+		entity.setName(actor.getName());
+		entity.setType(actor.getType());
+		return this.repository.save(entity);
 	}
 
 	public void delete(Actor actor) {
-
-		List<ActorEntity> actors = this.repository.findAll();
-		for (ActorEntity actorEntity : actors) {
-			if (actorEntity.getId() == actor.getId()) {
-				this.repository.deleteById(actorEntity.getId());
+		List<ActorEntity> entities = this.repository.findAll();
+		for (ActorEntity entity : entities) {
+			if (entity.getId() == actor.getId()) {
+				this.repository.deleteById(entity.getId());
+				break;
 			}
 		}
 	}
 
-	public void update(Actor ac) {
-		List<ActorEntity> actors = this.repository.findAll();
-		for (ActorEntity actorEntity : actors) {
-			if (actorEntity.getId() == ac.getId()) {
-				actorEntity.setName(ac.getName());
-				actorEntity.setType(ac.getType());
-				this.repository.save(actorEntity);
+	public void update(Actor actor) {
+		List<ActorEntity> entities = this.repository.findAll();
+		for (ActorEntity entity : entities) {
+			if (entity.getId() == actor.getId()) {
+				entity.setName(actor.getName());
+				entity.setType(actor.getType());
+				this.repository.save(entity);
+				break;
 			}
 		}
 	}
 
 	public List<Actor> retrieveActors() {
 		List<Actor> actors = new ArrayList<Actor>();
-		List<ActorEntity> actorsEntityList = this.repository.findAll();		
-		for(ActorEntity actorEntity : actorsEntityList) {
-			actors.add(cast(actorEntity));
+		List<ActorEntity> entities = this.repository.findAll();
+		for (ActorEntity entity : entities) {
+			actors.add(this.cast(entity));
 		}
 		return actors;
 	}
 
 	public List<Actor> retrieveActorByType(String actorType) {
 		List<Actor> actors = new ArrayList<Actor>();
-		List<ActorEntity> actorsEntityList = this.repository.findAll();
-		for (ActorEntity actorEntity : actorsEntityList) {
-			if (actorEntity.getType() == actorType) {
-				actors.add(cast(actorEntity));
+		List<ActorEntity> entities = this.repository.findAll();
+		for (ActorEntity entity : entities) {
+			if (entity.getType().equalsIgnoreCase(actorType)) {
+				actors.add(this.cast(entity));
 			}
 		}
 		return actors;
