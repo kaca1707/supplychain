@@ -11,6 +11,7 @@ import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,29 +75,20 @@ public class ActorService {
 	}
 
 	public List<Actor> retrieveActors() {
-		List<Actor> actors = null;
-		List<ActorEntity> actorsEntityList = this.repository.findAll();
-		if (actorsEntityList.isEmpty()) {
-			/* return new List<Actor>(); */
+		List<Actor> actors = new ArrayList<Actor>();
+		List<ActorEntity> actorsEntityList = this.repository.findAll();		
+		for(ActorEntity actorEntity : actorsEntityList) {
+			actors.add(cast(actorEntity));
 		}
-
-		/*
-		 * for(ActorEntity actorEntity : actorsEntityList) {
-		  }
-		 */
 		return actors;
 	}
 
 	public List<Actor> retrieveActorBytype(String actorType) {
-		List<Actor> actors = null;
+		List<Actor> actors = new ArrayList<Actor>();
 		List<ActorEntity> actorsEntityList = this.repository.findAll();
-		if (actorsEntityList.isEmpty()) {
-			/* return new List<Actor>(); */
-		}
-
 		for (ActorEntity actorEntity : actorsEntityList) {
 			if (actorEntity.getType() == actorType) {
-				
+				actors.add(cast(actorEntity));
 			}
 		}
 		return actors;
