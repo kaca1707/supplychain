@@ -35,17 +35,6 @@ public class ActorService {
 		return actor;
 	}
 
-	public Actor findByType(String type) {
-		List<ActorEntity> actors = this.repository.findAll();
-		for (int i = 0; i < actors.size(); i++) {
-			if (actors.get(i).getType().equals(type)) {
-				return this.cast(actors.get(i));
-
-			}
-		}
-		return null;
-	}
-
 	public ActorEntity save(Actor actor) {
 		ActorEntity actorEntity = new ActorEntity();
 		actorEntity.setName(actor.getName());
@@ -83,7 +72,7 @@ public class ActorService {
 		return actors;
 	}
 
-	public List<Actor> retrieveActorBytype(String actorType) {
+	public List<Actor> retrieveActorByType(String actorType) {
 		List<Actor> actors = new ArrayList<Actor>();
 		List<ActorEntity> actorsEntityList = this.repository.findAll();
 		for (ActorEntity actorEntity : actorsEntityList) {
