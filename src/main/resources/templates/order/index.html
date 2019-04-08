@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply chain</title>
+</head>
+<body>
+<h1>Order page</h1>
+
+
+<form method="post" action="/order">
+    <div>
+        <label for="actor">Select receiver</label>
+        <select id="actor" name="actor">
+            <option value="factory">Factory</option>
+            <option value="producer">Producer</option>
+            <option value="retailer">Retailer</option>
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">Create new order</button>
+    </div>
+</form>
+
+</body>
+</html>
