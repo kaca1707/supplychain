@@ -1,7 +1,6 @@
 package upm.softwaredesign.finalproject.controller;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,30 +8,46 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import upm.softwaredesign.finalproject.entity.ActorEntity;
-import upm.softwaredesign.finalproject.repository.ActorRepository;
 import upm.softwaredesign.finalproject.service.BlockchainService;
+import upm.softwaredesign.finalproject.service.ActorService;
+import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.viewmodel.HomeViewModel;
+import upm.softwaredesign.finalproject.viewmodel.LoginViewModel;
 
 @Controller
 public class HomeController {
 
-    private ActorRepository actorRepository;
+    private ActorService actorService;
     private BlockchainService blockchainService;
 
     @Autowired
-    public HomeController(ActorRepository actorRepository, BlockchainService blockchainService) {
-        this.actorRepository = actorRepository;
+    public HomeController(ActorService actorService, BlockchainService blockchainService) {
+        this.actorService = actorService;
         this.blockchainService = blockchainService;
     }
 
     @GetMapping("/")
-    public ModelAndView index(ModelAndView mav) {
-        List<ActorEntity> allActors = actorRepository.findAll();
-        mav.addObject("actors", allActors);
+    public ModelAndView index(ModelAndView mav, HomeViewModel model) {
+        String actorType = (
+            model.getType() == "factory" ||
+            model.getType() == "producer"
+        ) ? model.getType() : "retailer";
+        List<Actor> actors = actorService.retrieveActorByType(actorType);
+        mav.addObject("actors", actors);
+        mav.addObject("actorType", actorType);
         mav.setViewName("home/index");
-
         return mav;
     }
+
+    @PostMapping("/login")
+    public ModelAndView evaluateLogin(ModelAndView modelAndView, LoginViewModel model) {
+
+        // redirect to specific actor type pages
+        modelAndView.setViewName("redirect:/"+model.getType()+"?actor="+model.getActor());
+
+        return modelAndView;
+    }
+
     /*
     @PostMapping("/actor")
     public String createNewActor() {
@@ -45,37 +60,5 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @PostMapping("/retailer")
-    public String createNewRetailer() {
-        ActorEntity a = new RetailerEntity();
-        Random r = new Random();
-        final String name = "TEST-Retailer" + r.nextInt();
-        a.setName(name);
-        actorRepository.save(a);
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/factory")
-    public String createNewFactory() {
-        ActorEntity a = new FactoryEntity();
-        Random r = new Random();
-        final String name = "TEST-Factory" + r.nextInt();
-        a.setName(name);
-        actorRepository.save(a);
-
-        return "redirect:/";
-    }
-
-    @PostMapping("/producer")
-    public String createNewProducer() {
-        ActorEntity a = new ProducerEntity();
-        Random r = new Random();
-        final String name = "TEST-Producer" + r.nextInt();
-        a.setName(name);
-        actorRepository.save(a);
-
-        return "redirect:/";
-    }
 */
 }

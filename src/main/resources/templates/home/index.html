@@ -5,41 +5,68 @@
     <title>Supply chain</title>
 </head>
 <body>
-<h1>Welcome to supply chain</h1>
-All test actors:
-<table>
-    <thead>
-    <tr>
-        <th> Title</th>
-    </tr>
-    </thead>
-    <tbody>
+    <h1>Welcome to SupplyChain</h1>
 
-    <tr th:if="${actors.empty}">
-        <td colspan="2"> No actors Available</td>
-    </tr>
-    <tr th:each="actor:${actors}">
-        <td><span th:text="${actor.name}"> Name </span></td>
-    </tr>
-    </tbody>
-</table>
+    <section class="view view--login">
+        <div class="view__content">
 
-<form method="post" action="/actor">
-    <button type="submit">Create random actor</button>
-</form>
+            <div>
+                <a href="/?type=retailer">Retailer</a>
+                <a href="/?type=factory">Factory</a>
+                <a href="/?type=producer">Producer</a>
+            </div>
 
-<form method="post" action="/retailer">
-    <button type="submit">Create random retailer</button>
-</form>
+            <form method="post" action="/login">
+                <input type="hidden" name="type" th:value="${actorType}" />
+                <div>
+                    <p th:if="${actors.empty}">No actors available</p>
+                    <label th:each="actor:${actors}">
+                        <input type="radio" name="actor" th:value="${actor.name}">
+                        <span th:text="${actor.name}"> Actor Name </span>
+                    </label>
+                </div>
+                <p>
+                    <input type="submit" value="Login" />
+                </p>
+            </form>
 
-<form method="post" action="/factory">
-    <button type="submit">Create random factory</button>
-</form>
+        </div>
+    </section>
 
-<form method="post" action="/producer">
-    <button type="submit">Create random producer</button>
-</form>
 
-<button><a href="/order">Create order</a></button>
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th> Title</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+
+<!--    <tr th:if="${actors.empty}">-->
+<!--        <td colspan="2"> No actors Available</td>-->
+<!--    </tr>-->
+<!--    <tr th:each="actor:${actors}">-->
+<!--        <td><span th:text="${actor.name}"> Name </span></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<!--<form method="post" action="/actor">-->
+<!--    <button type="submit">Create random actor</button>-->
+<!--</form>-->
+
+<!--<form method="post" action="/retailer">-->
+<!--    <button type="submit">Create random retailer</button>-->
+<!--</form>-->
+
+<!--<form method="post" action="/factory">-->
+<!--    <button type="submit">Create random factory</button>-->
+<!--</form>-->
+
+<!--<form method="post" action="/producer">-->
+<!--    <button type="submit">Create random producer</button>-->
+<!--</form>-->
+
+<!--<button><a href="/order">Create order</a></button>-->
 </body>
 </html>
