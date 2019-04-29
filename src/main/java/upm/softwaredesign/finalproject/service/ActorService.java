@@ -81,5 +81,16 @@ public class ActorService {
 		}
 		return actors;
 	}
+	
+	public Actor retrieveActorById(int actorId) {
+		Actor actor = null; 
+		List<ActorEntity> entities = this.repository.findAll();
+		for (ActorEntity entity : entities) {
+			if (entity.getId().equals(actorId)) {
+				actor = this.cast(entity);
+			}
+		}
+		return actor;
+	}
 
 }
