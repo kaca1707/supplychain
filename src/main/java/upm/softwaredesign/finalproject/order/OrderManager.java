@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import upm.softwaredesign.finalproject.blockchain.BlockChainFactory;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.model.Actor;
@@ -33,11 +34,21 @@ public class OrderManager {
 
   /*
   @param actorId
-  @return collection of orders of an actor
+  @return collection of orders that an actor has sent
    */
-  public Collection<Order> getOrders(Integer actorId) {
+  public Collection<Order> getSentOrders(Integer actorId) {
     return BlockChainFactory.build().listOrders().stream()
         .filter(order -> order.getSender().getId().equals(actorId))
+        .collect(Collectors.toList());
+  }
+
+  /*
+  @param actorId
+  @return collection of orders that an actor has receive
+ */
+  public Collection<Order> getReceivedOrders(Integer actorId) {
+    return BlockChainFactory.build().listOrders().stream()
+        .filter(order -> order.getReceiver().getId().equals(actorId))
         .collect(Collectors.toList());
   }
 
@@ -46,11 +57,16 @@ public class OrderManager {
   @return collection of pending orders of an actor
  */
   public Collection<Order> getPendingOrders(Integer actorId) {
-    Collection<Order> orderCollection = getOrders(actorId);
-    List<UUID> idList = orderCollection.stream().map(order -> order.getTransactionGroupId()).collect(
+    Collection<Order> receivedOrderCollection= getReceivedOrders(actorId);
+    Collection<Order> sentOrderCollection = getSentOrders(actorId);
+
+    Stream<Order> orderCollection = Stream.concat(receivedOrderCollection.stream(),
+        sentOrderCollection.stream());
+
+    List<UUID> idList = orderCollection.map(order -> order.getTransactionGroupId()).collect(
         Collectors.toList());
-    return orderCollection.stream()
-        .filter(order -> Collections.frequency(idList, order.getTransactionGroupId()) < 2)
+    return orderCollection.
+        filter(order -> Collections.frequency(idList, order.getTransactionGroupId()) < 2)
         .collect(Collectors.toList());
   }
 
