@@ -1,6 +1,7 @@
 package upm.softwaredesign.finalproject.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -115,5 +116,17 @@ public class ActorServiceTests {
         List<Actor> actors = service.retrieveActorByType("retailer");
         assertTrue(!actors.isEmpty());
     }
+    
+    @Test
+    public void testRetrieveActorById() {
+    	ActorService service = new ActorService(this.repository);
+        Retailer retailer = new Retailer();
+        retailer.setName("foo");
+        retailer.setType("retailer");
+        ActorEntity entity = service.save(retailer);
+        Actor actor = service.retrieveActorById(entity.getId());
+        assertNotNull(actor);
+    }
 
+    
 }
