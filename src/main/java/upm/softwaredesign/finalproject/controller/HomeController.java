@@ -1,18 +1,21 @@
 package upm.softwaredesign.finalproject.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import upm.softwaredesign.finalproject.service.BlockchainService;
-import upm.softwaredesign.finalproject.service.ActorService;
+import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.service.ActorService;
+import upm.softwaredesign.finalproject.service.BlockchainService;
 import upm.softwaredesign.finalproject.viewmodel.HomeViewModel;
 import upm.softwaredesign.finalproject.viewmodel.LoginViewModel;
+
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.*;
 
 @Controller
 public class HomeController {
@@ -28,13 +31,15 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView mav, HomeViewModel model) {
-        String actorType = (
-            model.getType() == "factory" ||
-            model.getType() == "producer"
-        ) ? model.getType() : "retailer";
+
+        ActorType actorType = ofNullable(model.getType())
+                .map(String::toUpperCase)
+                .map(ActorType::valueOf)
+                .orElse(ActorType.RETAILER);
+
         List<Actor> actors = actorService.retrieveActorByType(actorType);
         mav.addObject("actors", actors);
-        mav.addObject("actorType", actorType);
+        mav.addObject("actorType", actorType.getName());
         mav.setViewName("home/index");
         return mav;
     }

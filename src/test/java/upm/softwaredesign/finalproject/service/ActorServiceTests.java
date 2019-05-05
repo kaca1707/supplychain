@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import upm.softwaredesign.finalproject.entity.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
@@ -40,7 +41,7 @@ public class ActorServiceTests {
         ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         ActorEntity entity = service.save(retailer);
         assertEquals(retailer.getName(), entity.getName());
         assertEquals(retailer.getType(), entity.getType());
@@ -51,7 +52,7 @@ public class ActorServiceTests {
         ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         ActorEntity entity = service.save(retailer);
         int entityId = entity.getId();
         retailer.setId(entityId);
@@ -71,7 +72,7 @@ public class ActorServiceTests {
         ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         ActorEntity entity = service.save(retailer);
         int entityId = entity.getId();
         retailer.setId(entityId);
@@ -92,7 +93,7 @@ public class ActorServiceTests {
         ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         ActorEntity entity = service.save(retailer);
         int entityId = entity.getId();
         retailer.setId(entityId);
@@ -111,9 +112,9 @@ public class ActorServiceTests {
         ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         service.save(retailer);
-        List<Actor> actors = service.retrieveActorByType("retailer");
+        List<Actor> actors = service.retrieveActorByType(ActorType.RETAILER);
         assertTrue(!actors.isEmpty());
     }
     
@@ -122,7 +123,7 @@ public class ActorServiceTests {
     	ActorService service = new ActorService(this.repository);
         Retailer retailer = new Retailer();
         retailer.setName("foo");
-        retailer.setType("retailer");
+        retailer.setType(ActorType.RETAILER);
         ActorEntity entity = service.save(retailer);
         Actor actor = service.retrieveActorById(entity.getId());
         assertNotNull(actor);

@@ -11,19 +11,38 @@
         <div class="view__content">
 
             <div>
-                <a href="/?type=retailer">Retailer</a>
-                <a href="/?type=factory">Factory</a>
-                <a href="/?type=producer">Producer</a>
+                <h2> Available actor types: </h2>
+                <ol>
+                    <li>
+                        <a href="/?type=retailer">Retailer</a>
+                    </li>
+                    <li>
+                        <a href="/?type=factory">Factory</a>
+                    </li>
+                    <li>
+                        <a href="/?type=producer">Producer</a>
+                    </li>
+                </ol>
+
             </div>
 
+            <h3>Available actors for: <span th:text="${actorType}"></span></h3>
             <form method="post" action="/login">
                 <input type="hidden" name="type" th:value="${actorType}" />
                 <div>
                     <p th:if="${actors.empty}">No actors available</p>
-                    <label th:each="actor:${actors}">
-                        <input type="radio" name="actor" th:value="${actor.name}">
-                        <span th:text="${actor.name}"> Actor Name </span>
-                    </label>
+                    <div>
+                        <table>
+                            <tr th:each="actor : ${actors}">
+                                <td>
+                                    <input type="radio" name="actor" th:value="${actor.name}">
+                                </td>
+                                <td>
+                                    <span th:text="${actor.name}"> Actor Name </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <p>
                     <input type="submit" value="Login" />
