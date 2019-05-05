@@ -13,9 +13,9 @@ import upm.softwaredesign.finalproject.viewmodel.HomeViewModel;
 import upm.softwaredesign.finalproject.viewmodel.LoginViewModel;
 
 import java.util.List;
-import java.util.Optional;
 
-import static java.util.Optional.*;
+import static java.util.Objects.isNull;
+import static java.util.Optional.ofNullable;
 
 @Controller
 public class HomeController {
@@ -47,9 +47,11 @@ public class HomeController {
     @PostMapping("/login")
     public ModelAndView evaluateLogin(ModelAndView modelAndView, LoginViewModel model) {
 
-        // redirect to specific actor type pages
-        modelAndView.setViewName("redirect:/"+model.getType()+"?actor="+model.getActor());
-
+        if (isNull(model.getId())) {
+            modelAndView.setViewName("redirect:/home/index");
+            return modelAndView;
+        }
+        modelAndView.setViewName(String.format("redirect:/actor/%d", model.getId()));
         return modelAndView;
     }
 
