@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import upm.softwaredesign.finalproject.entity.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,7 +25,7 @@ public class ActorRepositoryTests {
     public void testSave() {
         ActorEntity entity = new ActorEntity();
         entity.setName("foo");
-        entity.setType("retailer");
+        entity.setType(ActorType.RETAILER);
         entity = this.repository.save(entity);
         assertTrue(entity.getId() > 0);
         assertEquals(entity.getName(), "foo");
@@ -34,7 +35,7 @@ public class ActorRepositoryTests {
     public void testFindAll() {
         ActorEntity entity = new ActorEntity();
         entity.setName("foo");
-        entity.setType("retailer");
+        entity.setType(ActorType.RETAILER);
         entity = this.repository.save(entity);
         List<ActorEntity> entities = this.repository.findAll();
         assertTrue(!entities.isEmpty());

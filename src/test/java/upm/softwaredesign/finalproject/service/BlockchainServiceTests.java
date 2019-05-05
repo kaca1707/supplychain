@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import upm.softwaredesign.finalproject.blockchain.BlockChain;
+import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.entity.BlockchainEntity;
 import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.model.Retailer;
@@ -32,7 +33,7 @@ public class BlockchainServiceTests {
             BlockChain blockchain = new BlockChain(service);
             Retailer retailer = new Retailer();
             retailer.setName("foo");
-            retailer.setType("retailer");
+            retailer.setType(ActorType.RETAILER);
             Product product = new Product();
             Date time = new Date();
             Order order = new Order(retailer, product, time);
@@ -53,7 +54,7 @@ public class BlockchainServiceTests {
             BlockChain blockchain = new BlockChain(service);
             Retailer retailer = new Retailer();
             retailer.setName("foo");
-            retailer.setType("retailer");
+            retailer.setType(ActorType.RETAILER);
             Product product = new Product();
             Date time = new Date();
             Order order = new Order(retailer, product, time);

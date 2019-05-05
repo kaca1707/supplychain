@@ -1,15 +1,15 @@
 package upm.softwaredesign.finalproject.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import upm.softwaredesign.finalproject.entity.ActorEntity;
+import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Retailer;
 import upm.softwaredesign.finalproject.repository.ActorRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ActorService {
@@ -43,7 +43,7 @@ public class ActorService {
 	public void delete(Actor actor) {
 		List<ActorEntity> entities = this.repository.findAll();
 		for (ActorEntity entity : entities) {
-			if (entity.getId() == actor.getId()) {
+            if (entity.getId().equals(actor.getId())) {
 				this.repository.deleteById(entity.getId());
 				break;
 			}
@@ -53,7 +53,7 @@ public class ActorService {
 	public void update(Actor actor) {
 		List<ActorEntity> entities = this.repository.findAll();
 		for (ActorEntity entity : entities) {
-			if (entity.getId() == actor.getId()) {
+            if (entity.getId().equals(actor.getId())) {
 				entity.setName(actor.getName());
 				entity.setType(actor.getType());
 				this.repository.save(entity);
@@ -71,19 +71,19 @@ public class ActorService {
 		return actors;
 	}
 
-	public List<Actor> retrieveActorByType(String actorType) {
+    public List<Actor> retrieveActorByType(ActorType actorType) {
 		List<Actor> actors = new ArrayList<Actor>();
 		List<ActorEntity> entities = this.repository.findAll();
 		for (ActorEntity entity : entities) {
-			if (entity.getType().equalsIgnoreCase(actorType)) {
+            if (entity.getType() == actorType) {
 				actors.add(this.cast(entity));
 			}
 		}
 		return actors;
 	}
-	
+
 	public Actor retrieveActorById(int actorId) {
-		Actor actor = null; 
+		Actor actor = null;
 		List<ActorEntity> entities = this.repository.findAll();
 		for (ActorEntity entity : entities) {
 			if (entity.getId().equals(actorId)) {

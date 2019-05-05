@@ -1,13 +1,14 @@
 package upm.softwaredesign.finalproject.model;
 
 
+import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 
 public abstract class Actor {
 
     private Integer id;
     private String name;
-    private String type;
+    private ActorType type;
     private Actor previousInChain;
     private Actor nextInChain;
 
@@ -25,11 +26,11 @@ public abstract class Actor {
         this.name = name;
     }
 
-    public String getType() {
+    public ActorType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ActorType type) {
         this.type = type;
     }
 
