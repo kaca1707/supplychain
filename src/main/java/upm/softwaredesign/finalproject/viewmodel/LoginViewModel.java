@@ -2,23 +2,13 @@ package upm.softwaredesign.finalproject.viewmodel;
 
 public class LoginViewModel {
 
-    private String actor;
+    private Integer id;
 
-    public String getType() {
-        return type;
+    public Integer getId() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    private String type;
-
-    public String getActor() {
-        return actor;
-    }
-
-    public void setActor(String actor) {
-        this.actor = actor;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

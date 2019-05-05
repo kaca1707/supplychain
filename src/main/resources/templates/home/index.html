@@ -28,14 +28,14 @@
 
             <h3>Available actors for: <span th:text="${actorType}"></span></h3>
             <form method="post" action="/login">
-                <input type="hidden" name="type" th:value="${actorType}" />
                 <div>
                     <p th:if="${actors.empty}">No actors available</p>
                     <div>
                         <table>
                             <tr th:each="actor : ${actors}">
                                 <td>
-                                    <input type="radio" name="actor" th:value="${actor.name}">
+                                    <input type="hidden" name="id" th:value="${actor.id}" />
+                                    <input type="radio" name="actor" th:value="${actor.id}">
                                 </td>
                                 <td>
                                     <span th:text="${actor.name}"> Actor Name </span>
