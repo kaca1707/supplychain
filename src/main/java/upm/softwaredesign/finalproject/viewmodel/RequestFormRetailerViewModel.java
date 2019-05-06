@@ -2,22 +2,22 @@ package upm.softwaredesign.finalproject.viewmodel;
 
 public class RequestFormRetailerViewModel {
 
-    private Integer id;
-    private String selectFactory;
+    private Integer actorId;
+    private Integer receiverId;
 
-    public Integer getId() {
-        return id;
+    public Integer getActorId() {
+        return actorId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setActorId(Integer actorId) {
+        this.actorId = actorId;
     }
 
-    public String getSelectFactory() {
-        return selectFactory;
+    public Integer getReceiverId() {
+        return receiverId;
     }
 
-    public void setSelectFactory(String selectFactory) {
-        this.selectFactory = selectFactory;
+    public void setReceiverId(Integer receiverId) {
+        this.receiverId = receiverId;
     }
 }

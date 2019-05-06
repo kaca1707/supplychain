@@ -10,6 +10,8 @@ import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.service.ActorService;
 import upm.softwaredesign.finalproject.service.BlockchainService;
+import upm.softwaredesign.finalproject.viewmodel.CreateOrderVm;
+import upm.softwaredesign.finalproject.viewmodel.RequestFormRetailerViewModel;
 
 import java.util.List;
 
@@ -52,9 +54,19 @@ public class ActorController {
     }
 
     @PostMapping("/actor/form")
-    public ModelAndView requestForm(ModelAndView mav, Integer selectedFactoryId) {
-        //todo: retrieving data from from - to check
-        System.out.println("Selected factory:" + selectedFactoryId);
+    public ModelAndView requestForm(ModelAndView mav, RequestFormRetailerViewModel vm) {
+
+        Actor senderActor = actorService.retrieveActorById(vm.getActorId());
+        Actor receiverActor = actorService.retrieveActorById(vm.getReceiverId());
+        mav.addObject("senderActor", senderActor);
+        mav.addObject("receiverActor", receiverActor);
+        mav.setViewName("actor/retailerOrder");
+        return mav;
+    }
+
+    @PostMapping("/actor/newOrder")
+    public ModelAndView createOrder(ModelAndView mav, CreateOrderVm orderVm) {
+        System.out.println("Creating order for: " + orderVm.getProduct() + " - count: " + orderVm.getCount());
         mav.setViewName("redirect:/");
         return mav;
     }

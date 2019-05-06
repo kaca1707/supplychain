@@ -17,9 +17,9 @@
             <form method="post" action="/actor/form">
                 <div class="form-group">
                     <input type="hidden" name="actorId" th:value="${actor.id}">
-                    <label for="selectFactory">Request form</label>
+                    <label for="receiverId">Request form</label>
 
-                    <select class="form-control" id="selectFactory" name="selectedFactoryId" th:field="*{selectedFactoryId}">
+                    <select class="form-control" id="receiverId" name="receiverId">
                         <option th:each="factory : ${factories}" th:value="${factory.id}"
                                 th:text="${factory.name}"></option>
                     </select>
