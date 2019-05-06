@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import upm.softwaredesign.finalproject.order.Order;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
-import upm.softwaredesign.finalproject.order.OrderManager;
+import upm.softwaredesign.finalproject.order.OrderStorage;
 
 public class BlockChain implements Jsonable, OrderStorage {
 
