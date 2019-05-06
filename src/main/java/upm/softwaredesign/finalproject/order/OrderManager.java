@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import upm.softwaredesign.finalproject.blockchain.BlockChainFactory;
 import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Factory;
@@ -19,9 +18,17 @@ import upm.softwaredesign.finalproject.model.Retailer;
 
 public class OrderManager {
 
-  private final static OrderManager instance = new OrderManager();
+  private OrderStorage orderStorage;
+  private static OrderManager instance;
 
-  public static OrderManager getInstance() {
+  private OrderManager() {}
+
+  public static OrderManager getInstance(OrderStorage orderStorage) {
+    if (instance == null) {
+      instance = new OrderManager();
+      instance.orderStorage = orderStorage;
+    }
+
     return instance;
   }
 
@@ -29,7 +36,7 @@ public class OrderManager {
   @return collection of orders that are in the BlockChain
    */
   public Collection<Order> consultChain() {
-    return BlockChainFactory.build().listOrders();
+    return orderStorage.listOrders();
   }
 
   /*
@@ -37,7 +44,7 @@ public class OrderManager {
   @return collection of orders that an actor has sent
    */
   public Collection<Order> getSentOrders(Integer actorId) {
-    return BlockChainFactory.build().listOrders().stream()
+    return orderStorage.listOrders().stream()
         .filter(order -> order.getSender().getId().equals(actorId))
         .collect(Collectors.toList());
   }
@@ -47,7 +54,7 @@ public class OrderManager {
   @return collection of orders that an actor has receive
  */
   public Collection<Order> getReceivedOrders(Integer actorId) {
-    return BlockChainFactory.build().listOrders().stream()
+    return orderStorage.listOrders().stream()
         .filter(order -> order.getReceiver().getId().equals(actorId))
         .collect(Collectors.toList());
   }
@@ -79,7 +86,7 @@ public class OrderManager {
   public void saveRequest(Actor sender, Product product, Date time, UUID transactionGroupId) {
     Request request = new Request(sender, product, time);
     request.setTransactionGroupId(transactionGroupId);
-    BlockChainFactory.build().addOrder(request);
+    orderStorage.addOrder(request);
   }
 
   /* Saves a delivery order in the BlockChain
@@ -91,7 +98,7 @@ public class OrderManager {
   public void saveDelivery(Actor sender, Product product, Date time, UUID transactionGroupId) {
     Delivery delivery = new Delivery(sender, product, time);
     delivery.setTransactionGroupId(transactionGroupId);
-    BlockChainFactory.build().addOrder(delivery);
+    orderStorage.addOrder(delivery);
   }
 
   /* checks the status of a transaction:
@@ -104,7 +111,7 @@ public class OrderManager {
   public TransactionStatus status(UUID transactionGroupId) {
     ArrayList<Order> linkedOrder = new ArrayList<Order>();
     TransactionStatus status = null;
-    for (Order order : BlockChainFactory.build().listOrders()) {
+    for (Order order : orderStorage.listOrders()) {
       if (order.getTransactionGroupId().equals(transactionGroupId)) {
         linkedOrder.add(order);
       }
