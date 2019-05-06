@@ -13,7 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import upm.softwaredesign.finalproject.order.Order;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 
-public class BlockChain implements Jsonable {
+import upm.softwaredesign.finalproject.order.OrderManager;
+
+public class BlockChain implements Jsonable, OrderStorage {
 
 	private static BlockChain chain;
 	public ArrayList<Block> blocks;
@@ -27,18 +29,7 @@ public class BlockChain implements Jsonable {
 			}
 	}
 
-//	/**
-//	 * Singleton instance of the blockchain
-//	 *
-//	 * @return BlockChain
-//	 */
-//	public BlockChain build(){
-//		if (chain == null) {
-//			chain = retrieveChain();
-//		}
-//		return chain;
-//	}
-//
+
 	/**
 	 * Retrives the blockchain from persistence layer
 	 *
