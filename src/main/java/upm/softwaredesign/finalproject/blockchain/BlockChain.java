@@ -15,12 +15,38 @@ import upm.softwaredesign.finalproject.service.BlockchainService;
 
 public class BlockChain implements Jsonable {
 
-	private ArrayList<Block> blocks;
+	private static BlockChain chain;
+	public ArrayList<Block> blocks;
 	private BlockchainService blockchainService;
 
 	@Autowired
 	public BlockChain(BlockchainService blockchainService) {
 			this.blockchainService = blockchainService;
+			if (chain == null) {
+				chain = retrieveChain();
+			}
+	}
+
+//	/**
+//	 * Singleton instance of the blockchain
+//	 *
+//	 * @return BlockChain
+//	 */
+//	public BlockChain build(){
+//		if (chain == null) {
+//			chain = retrieveChain();
+//		}
+//		return chain;
+//	}
+//
+	/**
+	 * Retrives the blockchain from persistence layer
+	 *
+	 * @return BlockChain
+	 */
+	private BlockChain retrieveChain(){
+		// store instance
+		return this.blockchainService.retrieveBlockchain();
 	}
 
 	/**
@@ -50,11 +76,11 @@ public class BlockChain implements Jsonable {
 	 */
 	public Order orderInfo(UUID id){
 		// filter blocks by order id
-		for (Block block : this.blocks) {
-      if (block.getOrder().getId() == id) {
-				return block.getOrder();
-			}
-    }
+		for (Block block : this.chain.blocks) {
+		  if (block.getOrder().getId() == id) {
+			return block.getOrder();
+		  }
+		}
 		return null;
 	}
 
@@ -67,7 +93,7 @@ public class BlockChain implements Jsonable {
 		// make an ArrayList of Orders
 		ArrayList<Order> orders = new ArrayList<Order>();
 		// fill the list with orders extracted from blocks
-		for (Block block : this.blocks) {
+		for (Block block : this.chain.blocks) {
 	      orders.add(block.getOrder());
 	    }
 		return orders;
@@ -97,7 +123,7 @@ public class BlockChain implements Jsonable {
 	 * @param block
 	 */
 	private void appendBlock(Block block){
-		this.blocks.add(block);
+		this.chain.blocks.add(block);
 	}
 
 	/**
