@@ -29,12 +29,23 @@ public class ActorController {
     public ModelAndView getActorDetails(@PathVariable Integer id, ModelAndView mav) {
         Actor actor = actorService.retrieveActorById(id);
 
-        List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
+        if (actor.getType() == ActorType.RETAILER) {
+            List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
+            mav.addObject("factories", factories);
+            mav.addObject("selectedFactoryId", 0);
+        } else if (actor.getType() == ActorType.FACTORY){
+            List<Actor> producers = actorService.retrieveActorByType(ActorType.PRODUCER);
+            mav.addObject("producers", producers);
+            mav.addObject("selectedProducerId", 0);
+        } else {
+            List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
+            mav.addObject("factories", factories);
+            mav.addObject("selectedFactoryId", 0);
+        }
 
         mav.setViewName(String.format("/actor/%s", actor.getType().getName()));
         mav.addObject("actor", actor);
-        mav.addObject("factories", factories);
-        mav.addObject("selectedFactoryId", 0);
+
 //        actor.get
 //        mav.addObject("")
         return mav;
