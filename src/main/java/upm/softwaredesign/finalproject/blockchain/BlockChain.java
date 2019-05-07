@@ -46,9 +46,9 @@ public class BlockChain implements Jsonable, OrderStorage {
 	 * successful addition of the order
 	 *
 	 * @param order
-	 * @return Boolean
+	 * @return void
 	 */
-	public Boolean addOrder(Order order){
+	public void addOrder(Order order){
 		// wrap order in a Block
 		Block block = new Block();
 		block.setOrder(order);
