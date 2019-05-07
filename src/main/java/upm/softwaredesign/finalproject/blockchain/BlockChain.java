@@ -55,7 +55,7 @@ public class BlockChain implements Jsonable, OrderStorage {
 		// append block to the chain of blocks
 		this.appendBlock(block);
 		// store blockchains changes
-		return this.saveChain();
+		this.saveChain();
 	}
 
 	/**
