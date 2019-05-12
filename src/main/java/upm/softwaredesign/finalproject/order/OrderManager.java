@@ -86,7 +86,6 @@ public class OrderManager {
   public void saveRequest(Actor sender, Actor receiver, Product product, Date time, UUID transactionGroupId) {
     Request request = new Request(sender, receiver, product, time);
     request.setTransactionGroupId(transactionGroupId);
-    System.out.println("Provera 1");
     orderStorage.addOrder(request);
   }
 

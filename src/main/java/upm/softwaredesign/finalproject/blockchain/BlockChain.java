@@ -63,7 +63,6 @@ public class BlockChain implements Jsonable, OrderStorage {
 		// append block to the chain of blocks
 		this.appendBlock(block);
 		// store blockchains changes
-		System.out.println("Provera 2");
 		this.saveChain();
 
 	}
@@ -110,7 +109,6 @@ public class BlockChain implements Jsonable, OrderStorage {
 	private Boolean saveChain(){
 		try {
 			this.blockchainService.saveBlockchain(this);
-			System.out.println("Provera 4");
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();

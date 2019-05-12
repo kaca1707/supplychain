@@ -15,6 +15,7 @@ import upm.softwaredesign.finalproject.order.OrderManager;
 import upm.softwaredesign.finalproject.service.ActorService;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 import upm.softwaredesign.finalproject.viewmodel.CreateOrderVm;
+import upm.softwaredesign.finalproject.viewmodel.CreateRequestViewModel;
 import upm.softwaredesign.finalproject.viewmodel.RequestFormRetailerViewModel;
 
 import java.util.*;
@@ -42,11 +43,13 @@ public class ActorController {
             mav.addObject("factories", factories);
             mav.addObject("selectedFactoryId", 0);
         } else if (actor.getType() == ActorType.FACTORY){
+            Collection<Order> coll = om.getReceivedOrders(id);
+            List<Order> pendingOrders = new ArrayList<Order>(coll);
             List<Actor> producers = actorService.retrieveActorByType(ActorType.PRODUCER);
             mav.addObject("producers", producers);
             mav.addObject("selectedProducerId", 0);
+            mav.addObject("orders", pendingOrders);
         } else {
-            List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
             Collection<Order> coll = om.getReceivedOrders(id);
             List<Order> pendingOrders = new ArrayList<Order>(coll);
             //mav.addObject("factories", factories);
@@ -82,6 +85,20 @@ public class ActorController {
         Actor receiverActor = actorService.retrieveActorById(orderVm.getReceiver());
 
         om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
+
+        mav.setViewName("redirect:/");
+        return mav;
+    }
+
+    @PostMapping("/actor/delivery")
+    public ModelAndView createDelivery(ModelAndView mav, CreateRequestViewModel requestViewModel) {
+        String product = requestViewModel.getName();
+        int count = requestViewModel.getCount();
+        Product p = new Product(product, count);
+        Actor sender = actorService.retrieveActorById(requestViewModel.getSender());
+        Actor receiver = actorService.retrieveActorById(requestViewModel.getReceiver());
+        UUID transaction = requestViewModel.getId();
+        om.saveDelivery(sender, receiver, p, new Date(), transaction);
 
         mav.setViewName("redirect:/");
         return mav;
