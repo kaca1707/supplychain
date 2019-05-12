@@ -66,15 +66,22 @@ public class OrderManager {
   public Collection<Order> getPendingOrders(Integer actorId) {
     Collection<Order> receivedOrderCollection= getReceivedOrders(actorId);
     Collection<Order> sentOrderCollection = getSentOrders(actorId);
+    if (sentOrderCollection.size() == 0 && receivedOrderCollection.size() == 0){
+      return null;
+    }else if(receivedOrderCollection.size() == 0){
+      return receivedOrderCollection;
+    }else if(sentOrderCollection.size() == 0){
+      return receivedOrderCollection;
+    }else {
+      Stream<Order> orderCollection = Stream.concat(receivedOrderCollection.stream(),
+          sentOrderCollection.stream());
 
-    Stream<Order> orderCollection = Stream.concat(receivedOrderCollection.stream(),
-        sentOrderCollection.stream());
-
-    List<UUID> idList = orderCollection.map(order -> order.getTransactionGroupId()).collect(
-        Collectors.toList());
-    return orderCollection.
-        filter(order -> Collections.frequency(idList, order.getTransactionGroupId()) < 2)
-        .collect(Collectors.toList());
+      List<UUID> idList = orderCollection.map(order -> order.getTransactionGroupId()).collect(
+          Collectors.toList());
+      return orderCollection.
+          filter(order -> Collections.frequency(idList, order.getTransactionGroupId()) < 2)
+          .collect(Collectors.toList());
+    }
   }
 
   /* Saves a request order in the BlockChain
