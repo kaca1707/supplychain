@@ -11,9 +11,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import upm.softwaredesign.finalproject.order.Order;
-import upm.softwaredesign.finalproject.service.BlockchainService;
-
 import upm.softwaredesign.finalproject.order.OrderStorage;
+import upm.softwaredesign.finalproject.entity.BlockchainEntity;
+import upm.softwaredesign.finalproject.service.BlockchainService;
 
 public class BlockChain implements Jsonable, OrderStorage {
 
