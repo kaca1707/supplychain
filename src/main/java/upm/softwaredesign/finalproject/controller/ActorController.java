@@ -1,5 +1,6 @@
 package upm.softwaredesign.finalproject.controller;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,24 @@ public class ActorController {
     private BlockchainService blockchainService;
     private OrderManager om;
 
+    private List<Order> pendingOrders(Integer actorId) {
+        Collection<Order> collReceived = om.getReceivedOrders(actorId);
+        Collection<Order> collSent = om.getSentOrders(actorId);
+        List<Order> receivedOrders = new ArrayList<Order>(collReceived);
+        List<Order> sentOrders = new ArrayList<Order>(collSent);
+        List<Order> pendingOrders = new ArrayList<Order>();
+        for (Order r: receivedOrders) {
+            boolean t = false;
+            for (Order s: sentOrders) {
+                if (r.getTransactionGroupId().compareTo(s.getTransactionGroupId()) == 0)
+                    t = true;
+            }
+            if (!t)
+                pendingOrders.add(r);
+        }
+        return pendingOrders;
+    }
+
     @Autowired
     public ActorController(ActorService actorService, BlockchainService blockchainService) {
         this.actorService = actorService;
@@ -43,20 +62,14 @@ public class ActorController {
             mav.addObject("factories", factories);
             mav.addObject("selectedFactoryId", 0);
         } else if (actor.getType() == ActorType.FACTORY){
-            //Collection<Order> coll = om.getReceivedOrders(id);
-            Collection<Order> coll = om.getPendingOrders(id);
-            List<Order> pendingOrders = new ArrayList<Order>(coll);
             List<Actor> producers = actorService.retrieveActorByType(ActorType.PRODUCER);
             mav.addObject("producers", producers);
             mav.addObject("selectedProducerId", 0);
-            mav.addObject("orders", pendingOrders);
+            mav.addObject("orders", pendingOrders(id));
         } else {
-            //Collection<Order> coll = om.getReceivedOrders(id);
-            Collection<Order> coll = om.getPendingOrders(id);
-            List<Order> pendingOrders = new ArrayList<Order>(coll);
             //mav.addObject("factories", factories);
             //mav.addObject("selectedFactoryId", 0);
-            mav.addObject("orders", pendingOrders);
+            mav.addObject("orders", pendingOrders(id));
         }
 
         mav.setViewName(String.format("/actor/%s", actor.getType().getName()));

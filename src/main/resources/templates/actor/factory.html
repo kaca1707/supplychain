@@ -20,9 +20,10 @@
                 <table class="table">
                     <tr class="row" th:each="order : ${orders}">
                         <td>
-                            <table
-                                <form method="post" action="/actor/delivery">
-                                    <tr>
+                            <table>
+                                <tr>
+                                    <form method="post" action="/actor/delivery">
+
                                         <input type="hidden" name="id" th:value="${order.getTransactionGroupId()}"/>
                                         <input type="hidden" name="sender" th:value="${actor.id}"/>
                                         <input type="hidden" name="receiver" th:value="${order.getSender().getId()}"/>
@@ -37,9 +38,9 @@
                                         <td class="col">
                                             <button type="submit" class="btn btn-primary">Deliver</button>
                                         </td>
-                                    </tr>
-                                </table>
-                            </form>
+                                    </form>
+                                </tr>
+                            </table>
                         </td>
                         <td>
                             <form method="post" action="/actor/form">
