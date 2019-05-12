@@ -43,14 +43,16 @@ public class ActorController {
             mav.addObject("factories", factories);
             mav.addObject("selectedFactoryId", 0);
         } else if (actor.getType() == ActorType.FACTORY){
-            Collection<Order> coll = om.getReceivedOrders(id);
+            //Collection<Order> coll = om.getReceivedOrders(id);
+            Collection<Order> coll = om.getPendingOrders(id);
             List<Order> pendingOrders = new ArrayList<Order>(coll);
             List<Actor> producers = actorService.retrieveActorByType(ActorType.PRODUCER);
             mav.addObject("producers", producers);
             mav.addObject("selectedProducerId", 0);
             mav.addObject("orders", pendingOrders);
         } else {
-            Collection<Order> coll = om.getReceivedOrders(id);
+            //Collection<Order> coll = om.getReceivedOrders(id);
+            Collection<Order> coll = om.getPendingOrders(id);
             List<Order> pendingOrders = new ArrayList<Order>(coll);
             //mav.addObject("factories", factories);
             //mav.addObject("selectedFactoryId", 0);
