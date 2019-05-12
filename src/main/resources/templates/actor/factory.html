@@ -29,6 +29,28 @@
 
             </form>
 
+            <div>
+                <table class="table">
+                    <form method="post"  action="/actor/delivery">
+                        <tr class="row" th:each="order : ${orders}">
+                            <input type="hidden" name="id" th:value="${order.getTransactionGroupId()}"/>
+                            <input type="hidden" name="sender" th:value="${actor.id}"/>
+                            <input type="hidden" name="receiver" th:value="${order.getSender().getId()}"/>
+                            <input type="hidden" name="name" th:value="${order.getProduct().getName()}"/>
+                            <input type="hidden" name="count" th:value="${order.getProduct().getCount()}"/>
+                            <td class="col">
+                                <span  th:text="${order.getProduct().getName()}"> Product Name </span>
+                            </td>
+                            <td class="col">
+                                <span  th:text="${order.getProduct().getCount()}"> Product Count </span>
+                            </td>
+                            <td class="col">
+                                <button type="submit" class="btn btn-primary">Deliver</button>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
 
             <div style="margin-top: 50px">
                 <a href="/">
