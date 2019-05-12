@@ -10,26 +10,27 @@ import upm.softwaredesign.finalproject.blockchain.BlockChain;
 import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Product;
+import upm.softwaredesign.finalproject.order.Order;
 import upm.softwaredesign.finalproject.order.OrderManager;
 import upm.softwaredesign.finalproject.service.ActorService;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 import upm.softwaredesign.finalproject.viewmodel.CreateOrderVm;
 import upm.softwaredesign.finalproject.viewmodel.RequestFormRetailerViewModel;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class ActorController {
 
     private ActorService actorService;
     private BlockchainService blockchainService;
+    private OrderManager om;
 
     @Autowired
     public ActorController(ActorService actorService, BlockchainService blockchainService) {
         this.actorService = actorService;
         this.blockchainService = blockchainService;
+        this.om = OrderManager.getInstance(new BlockChain(blockchainService));
     }
 
     @GetMapping("/actor/{id}")
@@ -46,8 +47,11 @@ public class ActorController {
             mav.addObject("selectedProducerId", 0);
         } else {
             List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
-            mav.addObject("factories", factories);
-            mav.addObject("selectedFactoryId", 0);
+            Collection<Order> coll = om.getReceivedOrders(id);
+            List<Order> pendingOrders = new ArrayList<Order>(coll);
+            //mav.addObject("factories", factories);
+            //mav.addObject("selectedFactoryId", 0);
+            mav.addObject("orders", pendingOrders);
         }
 
         mav.setViewName(String.format("/actor/%s", actor.getType().getName()));
@@ -76,7 +80,7 @@ public class ActorController {
         Product p = new Product(product, count);
         Actor senderActor = actorService.retrieveActorById(orderVm.getSender());
         Actor receiverActor = actorService.retrieveActorById(orderVm.getReceiver());
-        OrderManager om = OrderManager.getInstance(new BlockChain(blockchainService));
+
         om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
 
         mav.setViewName("redirect:/");

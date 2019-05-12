@@ -16,7 +16,21 @@
             <h2>Producer name: <span th:text="${actor.name}"></span></h2>
 
             <span class="text-danger">Pending request - work in progress</span>
-
+            <form method="post"  action="/actor/delivery">
+                <div>
+                    <table class="table">
+                        <tr class="row" th:each="order : ${orders}">
+                            <input type="hidden" name="id" th:value="${order.getId()}"/>
+                            <td class="col">
+                                <span th:text="${order.getProduct().getName()}"> Actor Name </span>
+                            </td>
+                            <td class="col">
+                                <button type="submit" class="btn btn-primary">Deliver</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
 
             <div style="margin-top: 50px">
                 <a href="/">
