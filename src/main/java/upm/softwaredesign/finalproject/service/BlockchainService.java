@@ -45,17 +45,13 @@ public class BlockchainService {
 
     }
 
-    public BlockChain retrieveBlockchain() {
+    public BlockchainEntity retrieveBlockchain() {
         List<BlockchainEntity> blockchains = this.repository.findAll();
         if (blockchains.isEmpty()) {
-            return new BlockChain(this);
+            return null;
         }
         BlockchainEntity blockchainEntity = blockchains.get(0);
-
-        BlockChain blockChain = new BlockChain(this);
-        blockChain.fromJSON(blockchainEntity.getContent());
-
-        return blockChain;
+        return blockchainEntity;
     }
 
 }
