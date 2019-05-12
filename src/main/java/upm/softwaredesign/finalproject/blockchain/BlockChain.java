@@ -37,8 +37,10 @@ public class BlockChain implements Jsonable, OrderStorage {
 	 * @return BlockChain
 	 */
 	private BlockChain retrieveChain(){
-		// store instance
-		return this.blockchainService.retrieveBlockchain();
+		BlockchainEntity blockchainEntity = this.blockchainService.retrieveBlockchain();
+		BlockChain bc = new BlockChain(this.blockchainService);
+	        bc.fromJSON(blockchainEntity.getContent());
+		return bc;
 	}
 
 	/**
