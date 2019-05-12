@@ -76,8 +76,8 @@ public class ActorController {
         Product p = new Product(product, count);
         Actor senderActor = actorService.retrieveActorById(orderVm.getSender());
         Actor receiverActor = actorService.retrieveActorById(orderVm.getReceiver());
-        //OrderManager om = OrderManager.getInstance(new BlockChain(blockchainService));
-        //om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
+        OrderManager om = OrderManager.getInstance(new BlockChain(blockchainService));
+        om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
 
         mav.setViewName("redirect:/");
         return mav;

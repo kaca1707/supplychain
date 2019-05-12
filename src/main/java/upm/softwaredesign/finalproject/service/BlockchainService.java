@@ -48,7 +48,7 @@ public class BlockchainService {
     public BlockChain retrieveBlockchain() {
         List<BlockchainEntity> blockchains = this.repository.findAll();
         if (blockchains.isEmpty()) {
-            return new BlockChain(this);
+            return null;
         }
         BlockchainEntity blockchainEntity = blockchains.get(0);
 

@@ -23,11 +23,15 @@ public class BlockChain implements Jsonable, OrderStorage {
 
 	@Autowired
 	public BlockChain(BlockchainService blockchainService) {
-		blocks = new ArrayList<Block>();
+		//blocks = new ArrayList<Block>();
 		this.blockchainService = blockchainService;
 		if (chain == null) {
 			chain = retrieveChain();
 		}
+	}
+
+	private BlockChain() {
+		blocks = new ArrayList<Block>();
 	}
 
 
@@ -38,7 +42,10 @@ public class BlockChain implements Jsonable, OrderStorage {
 	 */
 	private BlockChain retrieveChain(){
 		// store instance
-		return this.blockchainService.retrieveBlockchain();
+		if (this.blockchainService.retrieveBlockchain() == null)
+			return new BlockChain();
+		else
+			return this.blockchainService.retrieveBlockchain();
 	}
 
 	/**
