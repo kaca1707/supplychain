@@ -4,6 +4,25 @@ public class CreateOrderVm {
 
     private String product;
     private Integer count;
+    private Integer sender;
+
+    public Integer getSender() {
+        return sender;
+    }
+
+    public void setSender(Integer sender) {
+        this.sender = sender;
+    }
+
+    public Integer getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Integer receiver) {
+        this.receiver = receiver;
+    }
+
+    private Integer receiver;
 
     public String getProduct() {
         return product;
@@ -20,4 +39,5 @@ public class CreateOrderVm {
     public void setCount(Integer count) {
         this.count = count;
     }
+
 }

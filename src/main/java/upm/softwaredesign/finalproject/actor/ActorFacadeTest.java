@@ -11,7 +11,7 @@ public class ActorFacadeTest {
         // simple example of usage of actor Facade
         OrderStorage blockChainFactory = null;
         ActorFacade actorFacade = new ActorFacade(OrderManager.getInstance(blockChainFactory));
-        actorFacade.createNewRequest(new Product());
+        actorFacade.createNewRequest(new Product("product1", 1));
 
     }
 }

@@ -6,14 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import upm.softwaredesign.finalproject.blockchain.BlockChain;
 import upm.softwaredesign.finalproject.entity.ActorType;
 import upm.softwaredesign.finalproject.model.Actor;
+import upm.softwaredesign.finalproject.model.Product;
+import upm.softwaredesign.finalproject.order.OrderManager;
 import upm.softwaredesign.finalproject.service.ActorService;
 import upm.softwaredesign.finalproject.service.BlockchainService;
 import upm.softwaredesign.finalproject.viewmodel.CreateOrderVm;
 import upm.softwaredesign.finalproject.viewmodel.RequestFormRetailerViewModel;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class ActorController {
@@ -66,7 +71,14 @@ public class ActorController {
 
     @PostMapping("/actor/newOrder")
     public ModelAndView createOrder(ModelAndView mav, CreateOrderVm orderVm) {
-        System.out.println("Creating order for: " + orderVm.getProduct() + " - count: " + orderVm.getCount());
+        String product = orderVm.getProduct();
+        int count = orderVm.getCount();
+        Product p = new Product(product, count);
+        Actor senderActor = actorService.retrieveActorById(orderVm.getSender());
+        Actor receiverActor = actorService.retrieveActorById(orderVm.getReceiver());
+        //OrderManager om = OrderManager.getInstance(new BlockChain(blockchainService));
+        //om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
+
         mav.setViewName("redirect:/");
         return mav;
     }

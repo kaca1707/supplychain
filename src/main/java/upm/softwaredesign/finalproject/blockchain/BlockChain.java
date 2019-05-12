@@ -23,10 +23,11 @@ public class BlockChain implements Jsonable, OrderStorage {
 
 	@Autowired
 	public BlockChain(BlockchainService blockchainService) {
-			this.blockchainService = blockchainService;
-			if (chain == null) {
-				chain = retrieveChain();
-			}
+		blocks = new ArrayList<Block>();
+		this.blockchainService = blockchainService;
+		if (chain == null) {
+			chain = retrieveChain();
+		}
 	}
 
 
@@ -55,7 +56,9 @@ public class BlockChain implements Jsonable, OrderStorage {
 		// append block to the chain of blocks
 		this.appendBlock(block);
 		// store blockchains changes
+		System.out.println("Provera 2");
 		this.saveChain();
+
 	}
 
 	/**
@@ -100,6 +103,7 @@ public class BlockChain implements Jsonable, OrderStorage {
 	private Boolean saveChain(){
 		try {
 			this.blockchainService.saveBlockchain(this);
+			System.out.println("Provera 4");
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();

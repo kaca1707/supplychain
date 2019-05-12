@@ -83,9 +83,10 @@ public class OrderManager {
   @param time
   @param transactionGroupId: id  that links a maximum of 4 orders
    */
-  public void saveRequest(Actor sender, Product product, Date time, UUID transactionGroupId) {
-    Request request = new Request(sender, product, time);
+  public void saveRequest(Actor sender, Actor receiver, Product product, Date time, UUID transactionGroupId) {
+    Request request = new Request(sender, receiver, product, time);
     request.setTransactionGroupId(transactionGroupId);
+    System.out.println("Provera 1");
     orderStorage.addOrder(request);
   }
 
@@ -95,8 +96,8 @@ public class OrderManager {
    @param time
    @param transactionGroupId: id  that links a maximum of 4 orders
     */
-  public void saveDelivery(Actor sender, Product product, Date time, UUID transactionGroupId) {
-    Delivery delivery = new Delivery(sender, product, time);
+  public void saveDelivery(Actor sender, Actor receiver, Product product, Date time, UUID transactionGroupId) {
+    Delivery delivery = new Delivery(sender, receiver, product, time);
     delivery.setTransactionGroupId(transactionGroupId);
     orderStorage.addOrder(delivery);
   }

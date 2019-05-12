@@ -18,6 +18,9 @@
 
 
             <form method="post" action="/actor/newOrder">
+                <input type="hidden" id="sender" name="sender" th:value="${senderActor.getId()}">
+                <input type="hidden" id="receiver" name="receiver" th:value="${receiverActor.getId()}">
+
                 <div class="form-group">
                     <label for="product">Product</label>
                     <input type="text" class="form-control" id="product" placeholder="Product name" name="product">
