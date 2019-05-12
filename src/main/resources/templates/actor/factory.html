@@ -14,41 +14,48 @@
         <div class="col-md-6">
             <h1>Factory View </h1>
             <h2>Factory name: <span th:text="${actor.name}"></span></h2>
-            <form method="post" action="/actor/form">
-                <div class="form-group">
-                    <input type="hidden" name="actorId" th:value="${actor.id}">
-                    <label for="receiverId">Request form</label>
 
-                    <select class="form-control" id="receiverId" name="receiverId">
-                        <option th:each="producer : ${producers}" th:value="${producer.id}"
-                                th:text="${producer.name}"></option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Request a form</button>
-
-            </form>
 
             <div>
                 <table class="table">
-                    <form method="post"  action="/actor/delivery">
-                        <tr class="row" th:each="order : ${orders}">
-                            <input type="hidden" name="id" th:value="${order.getTransactionGroupId()}"/>
-                            <input type="hidden" name="sender" th:value="${actor.id}"/>
-                            <input type="hidden" name="receiver" th:value="${order.getSender().getId()}"/>
-                            <input type="hidden" name="name" th:value="${order.getProduct().getName()}"/>
-                            <input type="hidden" name="count" th:value="${order.getProduct().getCount()}"/>
-                            <td class="col">
-                                <span  th:text="${order.getProduct().getName()}"> Product Name </span>
-                            </td>
-                            <td class="col">
-                                <span  th:text="${order.getProduct().getCount()}"> Product Count </span>
-                            </td>
-                            <td class="col">
-                                <button type="submit" class="btn btn-primary">Deliver</button>
-                            </td>
-                        </tr>
-                    </form>
+                    <tr class="row" th:each="order : ${orders}">
+                        <td>
+                            <table
+                                <form method="post" action="/actor/delivery">
+                                    <tr>
+                                        <input type="hidden" name="id" th:value="${order.getTransactionGroupId()}"/>
+                                        <input type="hidden" name="sender" th:value="${actor.id}"/>
+                                        <input type="hidden" name="receiver" th:value="${order.getSender().getId()}"/>
+                                        <input type="hidden" name="name" th:value="${order.getProduct().getName()}"/>
+                                        <input type="hidden" name="count" th:value="${order.getProduct().getCount()}"/>
+                                        <td class="col">
+                                            <span th:text="${order.getProduct().getName()}"> Product Name </span>
+                                        </td>
+                                        <td class="col">
+                                            <span th:text="${order.getProduct().getCount()}"> Product Count </span>
+                                        </td>
+                                        <td class="col">
+                                            <button type="submit" class="btn btn-primary">Deliver</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="/actor/form">
+                                <div class="form-group">
+                                    <input type="hidden" name="actorId" th:value="${actor.id}">
+                                    <label for="receiverId">Request form</label>
+
+                                    <select class="form-control" id="receiverId" name="receiverId">
+                                        <option th:each="producer : ${producers}" th:value="${producer.id}"
+                                                th:text="${producer.name}"></option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Request a form</button>
+                            </form>
+                        </td>
+                    </tr>
                 </table>
             </div>
 
