@@ -4,6 +4,7 @@ public class LoginViewModel {
 
     private Integer id;
 
+
     public Integer getId() {
         return id;
     }

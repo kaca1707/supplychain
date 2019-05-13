@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import upm.softwaredesign.finalproject.blockchain.BlockChain;
 import upm.softwaredesign.finalproject.entity.ActorType;
+import upm.softwaredesign.finalproject.enums.TransactionStatus;
 import upm.softwaredesign.finalproject.model.Actor;
 import upm.softwaredesign.finalproject.model.Product;
 import upm.softwaredesign.finalproject.order.Order;
@@ -20,6 +21,7 @@ import upm.softwaredesign.finalproject.viewmodel.CreateRequestViewModel;
 import upm.softwaredesign.finalproject.viewmodel.RequestFormRetailerViewModel;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class ActorController {
@@ -47,6 +49,48 @@ public class ActorController {
         return pendingOrders;
     }
 
+    private Collection<String[]> sentOrders(Integer actorId) {
+        Collection<Order> collSent = om.getSentOrders(actorId);
+        List<Order> sentOrders = new ArrayList<Order>(collSent);
+        Collection<Order> collRec = om.getReceivedOrders(actorId);
+        List<Order> recOrders = new ArrayList<Order>(collRec);
+       /* Collection<String[]> sent = new Collection<String[]>() {
+        }*/
+        List a = collSent.stream()
+                .map(order -> {
+                    String status = "Sent";
+                    Actor receiver = order.getReceiver();
+                    Collection<Order> reSent = om.getSentOrders(receiver.getId());
+                    Collection<Order> reRec = om.getReceivedOrders(receiver.getId());
+                    for (Order rs: reSent) {
+                        if (rs.getTransactionGroupId().compareTo(order.getTransactionGroupId()) == 0
+                            && rs.getSender().getType() != ActorType.PRODUCER) {
+                            status = "Sent by next actor";
+                        }
+                    }
+                    for (Order rr: reRec) {
+                        if (rr.getTransactionGroupId().compareTo(order.getTransactionGroupId()) == 0
+                            && rr.getSender().getType() != order.getSender().getType()) {
+                            status = "Received by next actor";
+                        }
+                    }
+                    for (Order r : recOrders) {
+                        if (order.getTransactionGroupId().compareTo(r.getTransactionGroupId()) == 0
+                            && order.getReceiver().getType() == r.getSender().getType()) {
+                            status = "Completed";
+                        }
+                    }
+
+                    return new String[]{order.getProduct().getName()
+                            , status};
+                }).collect(Collectors.toList());
+
+                return a;
+        /*return collSent.stream()
+                .map(order -> new String[]{order.getProduct().getName()
+                        , om.status(order.getTransactionGroupId()).toString()}).collect(Collectors.toList());*/
+    }
+
     @Autowired
     public ActorController(ActorService actorService, BlockchainService blockchainService) {
         this.actorService = actorService;
@@ -60,6 +104,7 @@ public class ActorController {
 
         if (actor.getType() == ActorType.RETAILER) {
             List<Actor> factories = actorService.retrieveActorByType(ActorType.FACTORY);
+
             mav.addObject("factories", factories);
             mav.addObject("selectedFactoryId", 0);
         } else if (actor.getType() == ActorType.FACTORY){
@@ -73,7 +118,7 @@ public class ActorController {
 
         mav.setViewName(String.format("/actor/%s", actor.getType().getName()));
         mav.addObject("actor", actor);
-
+        mav.addObject("sentOrders", sentOrders(id));
         return mav;
     }
 
@@ -123,11 +168,11 @@ public class ActorController {
         return mav;
     }
 
-    @GetMapping("/actor/orders/{id}")
+    /*@GetMapping("/actor/orders/{id}")
     public ModelAndView getCurrentOrders(@PathVariable Integer id, ModelAndView mav){
         System.out.println(id);
 
         mav.setViewName("redirect:/");
         return mav;
-    }
+    }*/
 }

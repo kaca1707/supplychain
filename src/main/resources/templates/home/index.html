@@ -45,8 +45,8 @@
                                 <!--</thead>-->
                                 <tr class="row" th:each="actor : ${actors}">
                                     <td class="col">
-                                        <input type="hidden" name="id" th:value="${actor.id}"/>
-                                        <input type="radio" name="actor" th:value="${actor.id}">
+                                        <!--<input type="hidden" name="id" th:value="${actor.id}"/>-->
+                                        <input type="radio" name="id" th:value="${actor.id}">
                                     </td>
                                     <td class="col">
                                         <span th:text="${actor.name}"> Actor Name </span>
