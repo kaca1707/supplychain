@@ -122,4 +122,12 @@ public class ActorController {
         mav.setViewName("redirect:/");
         return mav;
     }
+
+    @GetMapping("/actor/orders/{id}")
+    public ModelAndView getCurrentOrders(@PathVariable Integer id, ModelAndView mav){
+        System.out.println(id);
+
+        mav.setViewName("redirect:/");
+        return mav;
+    }
 }
