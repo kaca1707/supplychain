@@ -45,6 +45,7 @@
                         <td>
                             <form method="post" action="/actor/form">
                                 <div class="form-group">
+                                    <input type="hidden" name="orderId" th:value="${order.getTransactionGroupId()}">
                                     <input type="hidden" name="actorId" th:value="${actor.id}">
                                     <label for="receiverId">Request form</label>
 

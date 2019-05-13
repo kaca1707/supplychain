@@ -37,7 +37,8 @@ public class ActorController {
         for (Order r: receivedOrders) {
             boolean t = false;
             for (Order s: sentOrders) {
-                if (r.getTransactionGroupId().compareTo(s.getTransactionGroupId()) == 0)
+                if (r.getTransactionGroupId().compareTo(s.getTransactionGroupId()) == 0
+                    && r.getSender().getType() == s.getReceiver().getType())
                     t = true;
             }
             if (!t)
@@ -67,27 +68,26 @@ public class ActorController {
             mav.addObject("selectedProducerId", 0);
             mav.addObject("orders", pendingOrders(id));
         } else {
-            //mav.addObject("factories", factories);
-            //mav.addObject("selectedFactoryId", 0);
             mav.addObject("orders", pendingOrders(id));
         }
 
         mav.setViewName(String.format("/actor/%s", actor.getType().getName()));
         mav.addObject("actor", actor);
 
-//        actor.get
-//        mav.addObject("")
         return mav;
     }
 
     @PostMapping("/actor/form")
     public ModelAndView requestForm(ModelAndView mav, RequestFormRetailerViewModel vm) {
-
         Actor senderActor = actorService.retrieveActorById(vm.getActorId());
         Actor receiverActor = actorService.retrieveActorById(vm.getReceiverId());
         mav.addObject("senderActor", senderActor);
         mav.addObject("receiverActor", receiverActor);
-        mav.setViewName("actor/retailerOrder");
+        if (senderActor.getType() == ActorType.RETAILER)
+            mav.setViewName("actor/retailerOrder");
+        else
+            mav.addObject("id", vm.getOrderId());
+            mav.setViewName("actor/factoryOrder");
         return mav;
     }
 
@@ -99,7 +99,11 @@ public class ActorController {
         Actor senderActor = actorService.retrieveActorById(orderVm.getSender());
         Actor receiverActor = actorService.retrieveActorById(orderVm.getReceiver());
 
-        om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
+        if (orderVm.getId()!=null) {
+            om.saveRequest(senderActor, receiverActor, p, new Date(), orderVm.getId());
+        }
+        else
+            om.saveRequest(senderActor, receiverActor, p, new Date(), UUID.randomUUID());
 
         mav.setViewName("redirect:/");
         return mav;
